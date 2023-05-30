@@ -1,0 +1,9 @@
+node_modules
+dist
+logs
+application
+*.env
+.DS_Store
+*.gql
+/coverage
+tslint-to-eslint-config.log

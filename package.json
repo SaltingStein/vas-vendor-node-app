@@ -1,0 +1,108 @@
+{
+  "name": "ts-express-starter",
+  "version": "1.1.0",
+  "description": "TS Express Starter",
+  "main": "application/index.js",
+  "scripts": {
+    "start": "npm run build && npm run link && cross-env NODE_ENV=development node application/server.js",
+    "start:staging": "npm run build && cross-env NODE_ENV=staging node application/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "coverage": "jest --coverage",
+    "build": "tsc -p tsconfig.build.json",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\" \"src/**/*.js\" \"views/**/*.ejs\"",
+    "lint": "eslint 'src/**/**/*.ts'",
+    "lint:fix": "eslint 'src/**/**/*.ts' --fix",
+    "link": "link-module-alias",
+    "postinstall": "link-module-alias",
+    "preinstall": "command -v link-module-alias && link-module-alias clean || true",
+    "nodemon": "nodemon",
+    "commit": "git-cz",
+    "prepare": "husky install"
+  },
+  "_moduleAliases": {
+    "@models": "./application/models",
+    "@controllers": "./application/controllers",
+    "@libs": "./application/libs",
+    "@config": "./application/config",
+    "@connections": "./application/connections",
+    "@routes": "./application/api/routes",
+    "@api": "./application/api"
+  },
+  "_moduleAliasIgnoreWarning": true,
+  "author": "Peter Iyiola",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^14.14.37",
+    "@types/morgan": "^1.9.3",
+    "commitizen": "^4.2.4",
+    "link-module-alias": "^1.2.0",
+    "nodemon": "^2.0.3",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.2",
+    "jest": "^27.1.0",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.0",
+    "reflect-metadata": "^0.1.13",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.3.2"
+  },
+  "dependencies": {
+    "@weaverkit/data": "^0.0.13",
+    "@weaverkit/errors": "^0.0.13",
+    "@weaverkit/express": "^0.0.13",
+    "@weaverkit/logger": "^0.0.13",
+    "@weaverkit/utils": "^0.0.13",
+    "cross-env": "^7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.1",
+    "morgan": "^1.10.0",
+    "openapi3-ts": "^2.0.1",
+    "reflect-metadata": "^0.1.13"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "npm start",
+    "ext": "ts"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,jsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "!(assets)/**/.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm run build",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}

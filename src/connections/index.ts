@@ -1,0 +1,3 @@
+const connections = {};
+
+export = connections;
