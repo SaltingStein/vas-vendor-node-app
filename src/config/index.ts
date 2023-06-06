@@ -34,6 +34,11 @@ const Config = Object.freeze({
 		DEFAULT_CACHE_PERIOD: 3600,
 		ErrorHandler: new ErrorHandler(),
 	},
+	Fela: {
+		sourceName: getEnv<string>("FELA_SOURCE"),
+		baseUrl: getEnv<string>("FELA_BASE_URL"),
+		authToken: getEnv<string>("FELA_AUTH_TOKEN"),
+	},
 });
 
 addFileLogging(Config.App.LOG_DIR);
