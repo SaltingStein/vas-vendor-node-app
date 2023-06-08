@@ -36,7 +36,7 @@ export async function vendCabletv(
 				packageName: response.packageName,
 				smartCardNo: response.smartCardNo,
 				amount: response.amount,
-				receiptId: response.receiptId,
+				receipt: response.receiptId,
 				date: response.date,
 			},
 		};
@@ -64,15 +64,21 @@ async function fetchCabletvProviders(): Promise<Interface.ErrorResponse | Interf
 			title: string;
 		}[] = [];
 
-		for (const iterator in data.data) {
-			const provider = data.data(iterator);
-			providers.push(provider);
+		if (Object.keys(data.data).length > 0) {
+			for (const iterator in data.data) {
+				const provider = data.data(iterator);
+				providers.push(provider);
+			}
+			return {
+				ok: true,
+				data: providers,
+			};
+		} else {
+			return {
+				ok: false,
+				message: `Unable to retrieve cabletv providers. Please try again`,
+			};
 		}
-
-		return {
-			ok: true,
-			data: providers,
-		};
 	} catch (error: any) {
 		console.error(`Error fetching cabletv providers`);
 		if (error.response) {
@@ -98,7 +104,6 @@ async function fetchBouquets(provider: string): Promise<Interface.ErrorResponse 
 			price: string;
 			slug: string;
 		}[] = [];
-		// let response: any;
 		if (Object.keys(data.data).length > 0) {
 			for (const bouquet in data.data) {
 				bouquets.push(data.data[bouquet]);
@@ -164,7 +169,7 @@ async function getBouquetAmount(
 		} else {
 			return {
 				ok: false,
-				message: callResp.message,
+				message: callResp.message || "Unable to retrieve bouquet amount",
 			};
 		}
 	} catch (error) {
@@ -205,7 +210,7 @@ async function getProviderName(providerCode: string): Promise<Interface.GetProvi
 		} else {
 			return {
 				ok: false,
-				message: providers.message,
+				message: providers.message || "Unable to retrieve cabletv provider name",
 			};
 		}
 	} catch (error) {
@@ -246,7 +251,7 @@ async function getProviderCode(providerName: string): Promise<Interface.GetProvi
 		} else {
 			return {
 				ok: false,
-				message: providers.message,
+				message: providers.message || "Unable to retrieve cabletv provider code",
 			};
 		}
 	} catch (error) {
@@ -274,9 +279,15 @@ async function verifySmartCardNo(
 			headers: felaHeader,
 		});
 
+		const response = {
+			customer: data.data.customer,
+			customerNumber: data.data.customer_number,
+			type: data.data.type,
+		};
+
 		return {
 			ok: true,
-			data: data.data,
+			data: response,
 		};
 	} catch (error: any) {
 		console.error(`Error verifying smartcard No`);
