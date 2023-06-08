@@ -10,10 +10,24 @@ export interface VendAirtimeRequestData {
 	transactionRef: string;
 }
 
+export interface VendElectrictyRequestData {
+	meterNumber: string;
+	disco: string;
+	serviceCode: string;
+	amount: string;
+	merchantId: string;
+	transactionRef: string;
+}
+
 export interface VerifySmartCardNoRequestData {
 	cardNo: string;
 	providerCode: string;
 	bouquetCode: string;
+}
+export interface VerifyMeterNoRequestData {
+	meterNo: string;
+	disco: string;
+	serviceCode: string;
 }
 
 export interface VendCableTVRequestData {
@@ -43,6 +57,20 @@ export interface VendAirtimeResponse extends Response {
 		transactionReference: string;
 	};
 }
+export interface VendElectricityResponse extends Response {
+	data: {
+		token: string;
+		receipt: string;
+		meterNumber: string;
+		amount: string;
+		date: string;
+		units: string;
+		tariff: string;
+		additionalToken: string;
+		accountType: string;
+		transactionReference: string;
+	};
+}
 
 export interface VendCableTVResponse extends Response {
 	data: {
@@ -61,6 +89,26 @@ export interface VerifySmartCardNoResponse extends Response {
 		customerNumber: string;
 		type: string;
 	};
+}
+export interface VerifyMeterNoResponse extends Response {
+	data: {
+		name: string;
+		address: string;
+		disco: string;
+		phoneNumber: string;
+		tarriffIndex: string;
+		minimumAmount: string;
+	};
+}
+export interface GetElectricityProvidersResponse extends Response {
+	data: {
+		code: string;
+		title: string;
+		serviceCodes: {
+			code: string;
+			title: string;
+		}[];
+	}[];
 }
 
 export interface GetBouquetAmountResponse extends Response {
