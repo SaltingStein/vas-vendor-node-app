@@ -102,7 +102,7 @@ export interface VendDatabundleResponse extends Response {
 		amount: string;
 		recipient: string;
 		network: string;
-		date: Date;
+		date: string;
 		transactionReference: string;
 	};
 }

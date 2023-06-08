@@ -7,24 +7,23 @@ import axios from "axios";
 export async function vendDatabundle(
 	reqData: Interface.VendDatabundleRequestData,
 ): Promise<Interface.VendDatabundleResponse | Interface.ErrorResponse> {
-	const payload = {
-		offeringGroup: Enum.OfferingGroup.CORE,
-		offeringName: Enum.OfferingName.DATA_BUNDLE,
-		method: Enum.PaymentMethod.OFFLINE,
-		params: {
-			account_id: reqData.recipient,
-			bundle_code: reqData.bundleCode,
-			network: reqData.network,
-		},
-		user: {
-			sessionId: reqData.transactionRef,
-			source: Fela.sourceName,
-			sourceId: reqData.merchantId,
-			phoneNumber: reqData.merchantId,
-		},
-	};
-
 	try {
+		const payload = {
+			offeringGroup: Enum.OfferingGroup.CORE,
+			offeringName: Enum.OfferingName.DATA_BUNDLE,
+			method: Enum.PaymentMethod.OFFLINE,
+			params: {
+				account_id: reqData.recipient,
+				bundle_code: reqData.bundleCode,
+				network: reqData.network,
+			},
+			user: {
+				sessionId: reqData.transactionRef,
+				source: Fela.sourceName,
+				sourceId: reqData.merchantId,
+				phoneNumber: reqData.merchantId,
+			},
+		};
 		const { data } = await axios.post(`${Fela.baseUrl}/payment/offlinePay`, payload, { headers: felaHeader });
 		const response = data.data;
 		return {
