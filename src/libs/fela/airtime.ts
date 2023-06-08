@@ -70,13 +70,20 @@ export async function fetchAirtimeProviders(): Promise<Interface.ErrorResponse |
 
 		const providers: string[] = [];
 
-		for (const iterator in data.data) {
-			providers.push(iterator.toLowerCase());
+		if (Object.keys(data.data).length > 0) {
+			for (const iterator in data.data) {
+				providers.push(iterator.toLowerCase());
+			}
+			return {
+				ok: true,
+				data: providers,
+			};
+		} else {
+			return {
+				ok: false,
+				message: `Unable to retrieve airtime providers`,
+			};
 		}
-		return {
-			ok: true,
-			data: providers,
-		};
 	} catch (error: any) {
 		console.error(`Error fetching airtime providers`);
 		if (error.response) {
