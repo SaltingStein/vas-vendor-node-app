@@ -40,7 +40,7 @@ export async function vendAirtime(
 		return {
 			ok: true,
 			data: {
-				confirmCode: response.confirmCode,
+				receipt: response.confirmCode,
 				amount: response.amount,
 				recipient: response.recipient,
 				network: response.network,
@@ -70,7 +70,7 @@ export async function fetchAirtimeProviders(): Promise<Interface.ErrorResponse |
 
 		const providers: string[] = [];
 
-		for (const iterator of data.data) {
+		for (const iterator in data.data) {
 			providers.push(iterator.toLowerCase());
 		}
 		return {

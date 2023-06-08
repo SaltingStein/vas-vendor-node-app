@@ -36,7 +36,7 @@ export async function vendCabletv(
 				packageName: response.packageName,
 				smartCardNo: response.smartCardNo,
 				amount: response.amount,
-				receiptId: response.receiptId,
+				receipt: response.receiptId,
 				date: response.date,
 			},
 		};

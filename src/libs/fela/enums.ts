@@ -5,6 +5,7 @@ export enum OfferingGroup {
 export enum OfferingName {
 	CABLETV = "cabletv",
 	AIRTIME = "airtime",
+	DATA_BUNDLE = "databundle",
 }
 
 export enum PaymentMethod {
