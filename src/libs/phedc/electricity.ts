@@ -170,6 +170,36 @@ export async function vendElectricity(
 	}
 }
 
+export async function getWalletBalance(): Promise<Interface.getWalletBalanceResponse | Interface.ErrorResponse> {
+	try {
+		const requestPayload = {
+			username: Phedc.userName,
+			apikey: Phedc.apiKey,
+		};
+
+		const { data } = await axios.post(`${Phedc.baseUrl}/GetWalletBalance`, requestPayload);
+		return {
+			ok: true,
+			data: {
+				balance: data[0].BALANCE,
+			},
+		};
+	} catch (error: any) {
+		console.error("Error getting balance");
+		if (error.response) {
+			console.error("__________Error Response__________");
+			console.error(error.response.data);
+			console.error("__________Error Response__________");
+		}
+		console.error(error);
+
+		return {
+			ok: false,
+			message: "Unable to retrieve wallet balance",
+		};
+	}
+}
+
 function filterDetails(
 	details: Interface.Details[],
 ): Interface.genericReturn<

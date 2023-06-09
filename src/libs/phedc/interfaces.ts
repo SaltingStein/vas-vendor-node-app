@@ -27,6 +27,11 @@ export interface VerifyMeterNoResponse extends Response {
 		arrear: string;
 	};
 }
+export interface getWalletBalanceResponse extends Response {
+	data: {
+		balance: string;
+	};
+}
 export interface RequeryVendResponse extends Response {
 	data: {
 		meterNumber: string;
