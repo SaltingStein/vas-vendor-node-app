@@ -1,8 +1,18 @@
 import * as Enum from "./enums";
 
 export interface VerifyMeterNoRequestData {
-	meterNo: string;
+	meterNumber: string;
 	serviceCode: string;
+}
+
+export interface VendElectrictyRequestData {
+	meterNumber: string;
+	amount: string;
+	transactionRef: string;
+	customerName: string;
+	tarriffIndex: string;
+	address: string;
+	accountTypes: string;
 }
 
 interface Response {
@@ -19,7 +29,7 @@ export interface VerifyMeterNoResponse extends Response {
 }
 export interface RequeryVendResponse extends Response {
 	data: {
-		meterNo: string;
+		meterNumber: string;
 		receipt: string;
 		tarriffIndex: string;
 		date: string;
@@ -27,6 +37,24 @@ export interface RequeryVendResponse extends Response {
 		status: string;
 		units: string;
 		tarriff: string;
+		"Arrears (NGN)": string;
+		"Energy Value (NGN)": string;
+		"Preload (NGN)": string;
+		"VAT (NGN)": string;
+	};
+}
+
+export interface VendElectricityResponse extends Response {
+	data: {
+		token: string;
+		receipt: string;
+		meterNumber: string;
+		amount: string;
+		date: string;
+		units: string;
+		tariff: string;
+		accountType: string;
+		transactionReference: string;
 		"Arrears (NGN)": string;
 		"Energy Value (NGN)": string;
 		"Preload (NGN)": string;
@@ -42,3 +70,17 @@ export interface Details {
 export interface ErrorResponse extends Response {
 	message: string;
 }
+
+export type genericReturn<
+	T extends
+		| string
+		| number
+		| symbol
+		| Enum.phedcDetails.ARREARS
+		| Enum.phedcDetails.ENERGY_VALUE
+		| Enum.phedcDetails.PRELOAD
+		| Enum.phedcDetails.VAT,
+	C extends string | number | symbol,
+> = {
+	[x in T]: C;
+};
