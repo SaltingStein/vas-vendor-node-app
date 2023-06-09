@@ -44,3 +44,58 @@ export async function verifyMeterNo(
 		};
 	}
 }
+
+export async function requeryMeterVend(transId: string): Promise<Interface.RequeryVendResponse | Interface.ErrorResponse> {
+	try {
+		const requestPayload = {
+			Username: Phedc.userName,
+			apikey: Phedc.apiKey,
+			transactionNo: transId,
+		};
+		const { data } = await axios.post(`${Phedc.baseUrl}/GettransactionInfo`, requestPayload);
+
+		// console.log(resp.data);
+		if (data[0]) {
+			const details = {
+				"Arrears (NGN)": "0.00",
+				"Energy Value (NGN)": "0.00",
+				"Preload (NGN)": "0.00",
+				"VAT (NGN)": "0.00",
+			};
+			const transctionDetails: Interface.Details[] = data[0].DETAILS;
+			for (const iterator of transctionDetails) {
+				details[iterator.HEAD] = iterator.AMOUNT;
+			}
+			return {
+				ok: true,
+				data: {
+					meterNo: data[0].METER_NO,
+					receipt: data[0].RECEIPTNUMBER,
+					tarriffIndex: data[0].CUSTOMER_NO,
+					date: data[0].PAYMENTDATETIME,
+					amount: data[0].AMOUNT,
+					status: data[0].AMOUNT,
+					units: data[0].UNITSACTUAL,
+					tarriff: data[0].TARIFF,
+					...details,
+				},
+			};
+		} else {
+			return {
+				ok: false,
+				message: "No record found",
+			};
+		}
+	} catch (error: any) {
+		if (error.response) {
+			console.error(error.response.data);
+		} else {
+			console.error(error);
+		}
+
+		return {
+			ok: false,
+			message: "No record found",
+		};
+	}
+}
