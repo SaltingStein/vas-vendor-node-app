@@ -33,11 +33,18 @@ const Config = Object.freeze({
 		PROD,
 		DEFAULT_CACHE_PERIOD: 3600,
 		ErrorHandler: new ErrorHandler(),
+		contactEmail: getEnv<string>("CONTACT_EMAIL"),
+		contactPhone: getEnv<string>("CONTACT_PHONE"),
 	},
 	Fela: {
 		sourceName: getEnv<string>("FELA_SOURCE"),
 		baseUrl: getEnv<string>("FELA_BASE_URL"),
 		authToken: getEnv<string>("FELA_AUTH_TOKEN"),
+	},
+	Phedc: {
+		baseUrl: getEnv<string>("PHEDC_BASE_URL"),
+		userName: getEnv<string>("PHEDC_USER_NAME"),
+		apiKey: getEnv<string>("PHEDC_API_KEY"),
 	},
 });
 
