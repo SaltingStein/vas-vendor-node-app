@@ -135,6 +135,62 @@ export interface AirtimeProviderResponse<T> extends Response {
 export interface CableTVProviderResponse extends Response {
 	data: { [x: string]: string }[];
 }
+
+export interface VendDatabundleRequestData {
+	recipient: string;
+	bundleCode: string;
+	network: string;
+	merchantId: string;
+	transactionRef: string;
+}
+
+export interface VendDatabundleResponse extends Response {
+	data: {
+		receipt: string;
+		amount: string;
+		recipient: string;
+		network: string;
+		date: string;
+		transactionReference: string;
+	};
+}
+
+export interface DatabundleProviderResponse<T> extends Response {
+	data: T[];
+}
+
+// export interface FetchDatabundleRequestData {
+// 	provider: string;
+// }
+
+export interface FetchDatabundleResponse extends Response {
+	data: {
+		provider: string;
+		dataBundles: {
+			code: string;
+			title: string;
+			price: number;
+		}[];
+	};
+}
+
+export interface GetDatabundleAmountRequestData {
+	bundleCode: string;
+	provider: string;
+}
+
+export interface GetDatabundleAmountResponse extends Response {
+	data: {
+		price: number;
+		name: string;
+	};
+}
+
+// "code": "DATA-15",
+// "providerId": "MTN",
+// "title": "400GB - 365days",
+// "price": 120000
+
 // export interface IResponseBody<T = any> {
 // 	status: string;
 // 	responseCode: string;
