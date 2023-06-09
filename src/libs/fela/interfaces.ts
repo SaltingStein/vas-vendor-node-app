@@ -90,6 +90,7 @@ export interface VerifySmartCardNoResponse extends Response {
 		type: string;
 	};
 }
+
 export interface VerifyMeterNoResponse extends Response {
 	data: {
 		name: string;
@@ -100,6 +101,7 @@ export interface VerifyMeterNoResponse extends Response {
 		minimumAmount: string;
 	};
 }
+
 export interface GetElectricityProvidersResponse extends Response {
 	data: {
 		code: string;
@@ -159,10 +161,6 @@ export interface DatabundleProviderResponse<T> extends Response {
 	data: T[];
 }
 
-// export interface FetchDatabundleRequestData {
-// 	provider: string;
-// }
-
 export interface FetchDatabundleResponse extends Response {
 	data: {
 		provider: string;
@@ -183,6 +181,24 @@ export interface GetDatabundleAmountResponse extends Response {
 	data: {
 		price: number;
 		name: string;
+	};
+}
+
+export interface FetchOrderResponse extends Response {
+	message: string;
+	data: {
+		transactionRef: string;
+		status: string;
+		description: string;
+		initiator: number;
+		createdAt: string;
+		transactionParams: {
+			meterNumber: number;
+			providerCode: string;
+			serviceCode: string;
+			amount: number;
+			numberRef: number;
+		};
 	};
 }
 
