@@ -35,6 +35,7 @@ const Config = Object.freeze({
 		ErrorHandler: new ErrorHandler(),
 		contactEmail: getEnv<string>("CONTACT_EMAIL"),
 		contactPhone: getEnv<string>("CONTACT_PHONE"),
+		LOG_TO_FILE: !!Number(getEnv<string>("ADD_FILE_LOGGING", "0")),
 	},
 	Fela: {
 		sourceName: getEnv<string>("FELA_SOURCE"),
@@ -46,6 +47,15 @@ const Config = Object.freeze({
 		userName: getEnv<string>("PHEDC_USER_NAME"),
 		apiKey: getEnv<string>("PHEDC_API_KEY"),
 	},
+	Redis: {
+		host: process.env.REDIS_HOST,
+		port: Number(process.env.REDIS_PORT),
+		password: process.env.REDIS_PASSWORD,
+		tls: process.env.REDIS_TLS,
+	},
+	Db: {
+		MONGO_URI: process.env.MONGO_URI || "mongodb://localhost:27017/vasvending",
+	}
 });
 
 addFileLogging(Config.App.LOG_DIR);
