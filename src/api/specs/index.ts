@@ -1,4 +1,4 @@
-import { OpenApiBuilder } from "openapi3-ts";
+import { OpenApiBuilder } from "openapi3-ts/oas31";
 
 export const builder = new OpenApiBuilder();
 builder.addInfo({
