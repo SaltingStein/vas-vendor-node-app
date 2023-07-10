@@ -1,3 +1,9 @@
+export enum ErrorType {
+	VALIDATION = "ValidationError",
+	BADREQUEST = "BadRequestError",
+	NOTFOUND = "NotFoundError",
+	SERVICEUNAVAILABLE = "ServiceUnavailableError",
+}
 export abstract class AppError extends Error {
 	public abstract httpCode: number;
 	public reportable = true;
@@ -112,8 +118,8 @@ abstract class MaskedError extends AppError {
 
 export class ServiceUnavailableError extends MaskedError {
 	public httpCode = 503;
-	constructor(public serviceName?: string, originalError?: any) {
-		super("Service unavailable at the moment", originalError);
+	constructor(message: any = "Service unavailable at the moment", originalError?: any) {
+		super(message, originalError);
 	}
 }
 

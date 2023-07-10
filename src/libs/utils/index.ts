@@ -1,17 +1,15 @@
 import shortid from "shortid";
 import Interpolator from "string-interpolation";
 import { v4 as uuidv4 } from "uuid";
-import moment from "moment";
 import fs from "fs";
 const fsPromises = fs.promises;
-import path from "path";
 import crypto from "crypto";
 
 export const interpolator = new Interpolator({
 	delimiter: ["{{", "}}"],
 });
 
-// tslint:disable-next-line: no-empty
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop = (...args: any[]): any => {};
 
 export const readFileToStringAsync = async (filePath: string) => {
@@ -60,32 +58,6 @@ export const sanitizePhoneNumber = (phoneNo: string, code = "234") => {
 	}
 	return code + phone;
 };
-
-export const isSameDay = (date: Date, compare = new Date()) => {
-	return moment(date).isSame(moment(compare), "day");
-};
-
-export const defaultReportExtension = ".xlsx";
-
-export async function deleteTempFile(fileName: string) {
-	try {
-		await fsPromises.unlink(path.resolve(__dirname, `../temp/${fileName}${defaultReportExtension}`));
-	} catch (error: any) {
-		console.error(error);
-		throw new Error(error);
-	}
-
-	console.log(`${fileName} deleted successfully`);
-	return fileName;
-}
-
-export function formatNumber(num: string | number) {
-	if (typeof num === "string") {
-		num = parseInt(num, 10);
-		// console.log(num);
-	}
-	return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-}
 
 export function formatNumberAsCurrency(num: string | number) {
 	if (typeof num === "string") {

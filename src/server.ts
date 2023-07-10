@@ -1,7 +1,7 @@
 import Config from "@config";
 import { Logger } from "@weaverkit/logger";
 import http from "http";
-import app from "@api";
+import app from "./api";
 
 app.set("port", Config.App.PORT);
 

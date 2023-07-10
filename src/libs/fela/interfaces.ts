@@ -1,3 +1,5 @@
+import { Response } from "@components/interfaces";
+export { ErrorResponse } from "@components/interfaces";
 export interface IObjectData {
 	[key: string]: any;
 }
@@ -41,10 +43,6 @@ export interface VendCableTVRequestData {
 export interface GetBouquetAmountRequestData {
 	bouquetCode: string;
 	provider: string;
-}
-
-interface Response {
-	ok: boolean;
 }
 
 export interface VendAirtimeResponse extends Response {
@@ -104,13 +102,15 @@ export interface VerifyMeterNoResponse extends Response {
 
 export interface GetElectricityProvidersResponse extends Response {
 	data: {
-		code: string;
-		title: string;
-		serviceCodes: {
+		[T: string]: {
 			code: string;
 			title: string;
-		}[];
-	}[];
+			serviceCodes: {
+				code: string;
+				title: string;
+			}[];
+		};
+	};
 }
 
 export interface GetBouquetAmountResponse extends Response {
@@ -126,16 +126,19 @@ export interface GetProviderPropertyResponse extends Response {
 	};
 }
 
-export interface ErrorResponse extends Response {
-	message: string;
-}
-
-export interface AirtimeProviderResponse<T> extends Response {
-	data: T[];
-}
+// export interface AirtimeProviderResponse<T> extends Response {
+// 	data: T;
+// }
 
 export interface CableTVProviderResponse extends Response {
-	data: { [x: string]: string }[];
+	data: {
+		[T: string]: {
+			code: string;
+			title: string;
+			price: string;
+			slug: string;
+		};
+	};
 }
 
 export interface VendDatabundleRequestData {
@@ -157,8 +160,13 @@ export interface VendDatabundleResponse extends Response {
 	};
 }
 
-export interface DatabundleProviderResponse<T> extends Response {
-	data: T[];
+export interface ProviderResponse extends Response {
+	data: {
+		[T: string]: {
+			code: string;
+			title: string;
+		};
+	};
 }
 
 export interface FetchDatabundleResponse extends Response {

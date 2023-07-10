@@ -2,6 +2,7 @@ import { Fela } from "@config";
 import * as Interface from "./interfaces";
 const felaHeader = { Authorization: `Bearer ${Fela.authToken}` };
 import axios from "axios";
+import { ErrorType } from "@components/errors";
 
 export async function fetchOrderDetails(transactionRef: string): Promise<Interface.FetchOrderResponse | Interface.ErrorResponse> {
 	try {
@@ -29,7 +30,10 @@ export async function fetchOrderDetails(transactionRef: string): Promise<Interfa
 		} else {
 			return {
 				ok: false,
-				message: `No order with transaction ref (${transactionRef}) found`,
+				data: {
+					type: ErrorType.NOTFOUND,
+					message: `No order with transaction ref (${transactionRef}) found`,
+				},
 			};
 		}
 	} catch (error: any) {
@@ -37,7 +41,10 @@ export async function fetchOrderDetails(transactionRef: string): Promise<Interfa
 		console.error(error);
 		return {
 			ok: false,
-			message: `Error fetching order with transaction ref  (${transactionRef})`,
+			data: {
+				type: ErrorType.SERVICEUNAVAILABLE,
+				message: `Error fetching order with transaction ref  (${transactionRef})`,
+			},
 		};
 	}
 }

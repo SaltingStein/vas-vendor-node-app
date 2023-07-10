@@ -1,4 +1,6 @@
 import * as Enum from "./enums";
+import { Response } from "@components/interfaces";
+export { ErrorResponse } from "@components/interfaces";
 
 export interface VerifyMeterNoRequestData {
 	meterNumber: string;
@@ -15,10 +17,6 @@ export interface VendElectrictyRequestData {
 	accountTypes: string;
 }
 
-interface Response {
-	ok: boolean;
-}
-
 export interface VerifyMeterNoResponse extends Response {
 	data: {
 		name: string;
@@ -32,6 +30,14 @@ export interface getWalletBalanceResponse extends Response {
 		balance: string;
 	};
 }
+
+export interface detailsProperties {
+	"Arrears (NGN)": string;
+	"Energy Value (NGN)": string;
+	"Preload (NGN)": string;
+	"VAT (NGN)": string;
+}
+
 export interface RequeryVendResponse extends Response {
 	data: {
 		meterNumber: string;
@@ -42,11 +48,7 @@ export interface RequeryVendResponse extends Response {
 		status: string;
 		units: string;
 		tarriff: string;
-		"Arrears (NGN)": string;
-		"Energy Value (NGN)": string;
-		"Preload (NGN)": string;
-		"VAT (NGN)": string;
-	};
+	} & detailsProperties;
 }
 
 export interface VendElectricityResponse extends Response {
@@ -60,20 +62,12 @@ export interface VendElectricityResponse extends Response {
 		tariff: string;
 		accountType: string;
 		transactionReference: string;
-		"Arrears (NGN)": string;
-		"Energy Value (NGN)": string;
-		"Preload (NGN)": string;
-		"VAT (NGN)": string;
-	};
+	} & detailsProperties;
 }
 
 export interface Details {
 	HEAD: Enum.phedcDetails.ARREARS | Enum.phedcDetails.ENERGY_VALUE | Enum.phedcDetails.PRELOAD | Enum.phedcDetails.VAT;
 	AMOUNT: string;
-}
-
-export interface ErrorResponse extends Response {
-	message: string;
 }
 
 export type genericReturn<

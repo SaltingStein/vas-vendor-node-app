@@ -26,6 +26,7 @@
 				"@config": "./application/config",
 				"@connections": "./application/connections",
 				"@routes": "./application/api/routes",
+				"@models": "./application/models",
 				"@api": "./application/api",
 				"@components": "./application/components"
 		},
@@ -81,6 +82,7 @@
 				"@weaverkit/logger": "0.0.11",
 				"apollo-server-express": "^2.14.3",
 				"axios": "^0.19.2",
+				"bcrypt": "^5.1.0",
 				"cachegoose": "^8.0.0",
 				"cacheman-redis": "^2.1.0",
 				"class-validator": "^0.12.2",
@@ -117,6 +119,7 @@
 				"rimraf": "^3.0.2",
 				"seedrandom": "^3.0.5",
 				"shortid": "^2.2.15",
+				"string-interpolation": "^1.2.5",
 				"string-strip-html": "^6.3.0",
 				"strong-soap": "^3.4.1",
 				"type-graphql": "^1.0.0-rc.2",
