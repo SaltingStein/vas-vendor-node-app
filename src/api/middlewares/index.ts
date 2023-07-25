@@ -1,6 +1,10 @@
 import { SupportedHttpMethods } from "@weaverkit/express";
 import express from "express";
+import jwt from "jsonwebtoken";
 import { UnauthorizedError, ServerError, AppError } from "@weaverkit/errors";
+import { App } from "@config";
+import Redis from "@connections/redis";
+import WPCore from "@libs/WPCore";
 
 type ExcludedPath = { [k in SupportedHttpMethods]?: RegExp[] } | RegExp[];
 
@@ -40,6 +44,27 @@ const excluded = (rq: express.Request, list: ExcludedPath) => {
 		return ex;
 	}
 	return false;
+};
+
+export const authorize = async (token: string, ctx: any): Promise<AuthStrategyResponse> => {
+	try {
+		const response: any = await jwt.verify(token, App.JWT_SECRET);
+		console.log("RESPONSE", response);
+		if (response) {
+			const {
+				data: { user },
+			} = response;
+			const cached = await Redis.ActiveConnection.get(`${App.ENV}:${user.user_msisdn}`);
+		} else {
+		}
+		return { authorized: false, message: "Invalid authorization token provided", code: 401 };
+	} catch (error: any) {
+		console.log("AUTHENTICATION ERROR", error);
+		if (error.message === "jwt expired") {
+			return { authorized: false, message: "Authorization failed,  Access token is expired", code: 403 };
+		}
+		return { authorized: false, message: "Unable to authenticate provided token", code: 401 };
+	}
 };
 
 export const BearerAuth = ({ headerKey = "Bearer", excludedPaths = [], strategy }: AuthOptions) => {
