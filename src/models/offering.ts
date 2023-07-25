@@ -4,7 +4,7 @@ import { Field, ObjectType } from "type-graphql";
 import { prop, getModelForClass, ReturnModelType } from "@typegoose/typegoose";
 import { composePaginatedModel, editable, filterable, sortable } from "./helper";
 import { App } from "@config";
-import { NotFoundError } from "@components/errors";
+import { NotFoundError, BadRequestError } from "@components/errors";
 
 @ObjectType("Offering")
 export class IOffering extends MyGoose {
@@ -16,6 +16,17 @@ export class IOffering extends MyGoose {
 			App.ErrorHandler.handle(new NotFoundError("Offering does not exist"));
 			throw new NotFoundError("Offering does not exist");
 		}
+		return offering;
+	}
+	public static async createOffering(this: ReturnModelType<typeof IOffering>, offeringName: string) {
+		const offeringExist = await this.findOne({
+			name: offeringName,
+		});
+		if (offeringExist) {
+			App.ErrorHandler.handle(new BadRequestError("Offering already exist"));
+			throw new BadRequestError("Offering already exist").data({ offering: offeringName });
+		}
+		const offering = await this.create({ name: offeringName });
 		return offering;
 	}
 	@prop({ required: true })

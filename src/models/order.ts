@@ -4,7 +4,6 @@ import { SessionSourceObject } from "@modules/source";
 import { Schema } from "mongoose";
 import { Field, ObjectType, registerEnumType } from "type-graphql";
 import { ReturnModelType, pre, prop, Ref, getModelForClass } from "@typegoose/typegoose";
-import { ChangeHistory } from "./change-history";
 import { composePaginatedModel, filterable, sortable } from "./helper";
 import { IOffering } from "./offering";
 import { IPayment } from "./payment";
@@ -13,6 +12,7 @@ import { IUser } from "./user";
 export enum OrderStatus {
 	COMPLETED = "completed",
 	PENDING = "pending",
+	PROCESSING = "processing",
 	QUEUED = "queued",
 	FAILED = "failed",
 	FAILED_DONTRETY = "failed_dontretry",
@@ -53,6 +53,21 @@ export class OrderSource implements SessionSourceObject {
 	public sessionId!: string;
 }
 
+@ObjectType()
+export class ChangeHistory {
+	@prop({ required: true, default: null })
+	@Field(() => String, { nullable: true })
+	public from!: string | null;
+
+	@prop({ required: true })
+	@Field()
+	public to!: string;
+
+	@prop({ default: Date.now })
+	@Field()
+	public date!: Date;
+}
+
 @pre<IOrder>("save", function (next) {
 	if (this.isModified("status") && (this as any)._oldStatus) {
 		this.history.push({
@@ -71,9 +86,7 @@ export class IOrder extends MyGoose {
 			.populate("payment")
 			.populate({
 				path: "offering",
-				populate: { path: "group" },
 			})
-			.populate("user")
 			.exec();
 	}
 	@prop({ ref: IPayment, required: true, unique: true })

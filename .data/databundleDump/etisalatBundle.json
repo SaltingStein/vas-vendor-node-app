@@ -1,0 +1,101 @@
+[{
+	"providerId": "Etisalat",
+	"bundles": [
+		{
+			"code": "9MO-25MB-15",
+			"provider": "Etisalat",
+			"title": "25MB - 1day",
+			"price": 50
+		},
+		{
+			"code": "9MO-100MB-1",
+			"provider": "Etisalat",
+			"title": "100MB - 1day",
+			"price": 100
+		},
+		{
+			"code": "9MO-650MB-2",
+			"provider": "Etisalat",
+			"title": "650MB - 1day",
+			"price": 200
+		},
+		{
+			"code": "9MO-500MB-8",
+			"provider": "Etisalat",
+			"title": "500MB - 30days",
+			"price": 500
+		},
+		{
+			"code": "9MO-1.5GB-3",
+			"provider": "Etisalat",
+			"title": "1.5GB - 30days",
+			"price": 1000
+		},
+		{
+			"code": "9MO-2GB-4",
+			"provider": "Etisalat",
+			"title": "2GB - 30days",
+			"price": 1200
+		},
+		{
+			"code": "9MO-7GB-16",
+			"provider": "Etisalat",
+			"title": "7GB - 7days",
+			"price": 1500
+		},
+		{
+			"code": "9MO-4.5GB-5",
+			"provider": "Etisalat",
+			"title": "4.5GB - 30days",
+			"price": 2000
+		},
+		{
+			"code": "9MO-11GB-7",
+			"provider": "Etisalat",
+			"title": "11GB - 30days",
+			"price": 4000
+		},
+		{
+			"code": "9MO-15GB-6",
+			"provider": "Etisalat",
+			"title": "15GB - 30days",
+			"price": 5000
+		},
+		{
+			"code": "9MO-40GB-9",
+			"provider": "Etisalat",
+			"title": "40GB - 30days",
+			"price": 10000
+		},
+		{
+			"code": "9MO-75GB-10",
+			"provider": "Etisalat",
+			"title": "75GB - 30days",
+			"price": 15000
+		},
+		{
+			"code": "9MO-75GB-11",
+			"provider": "Etisalat",
+			"title": "75GB - 90days",
+			"price": 25000
+		},
+		{
+			"code": "9MO-165GB-12",
+			"provider": "Etisalat",
+			"title": "165GB - 180days",
+			"price": 50000
+		},
+		{
+			"code": "9MO-100GB-13",
+			"provider": "Etisalat",
+			"title": "100GB - 100days",
+			"price": 84992
+		},
+		{
+			"code": "9MO-365GB-14",
+			"provider": "Etisalat",
+			"title": "365GB - 365days",
+			"price": 100000
+		}
+]
+}]

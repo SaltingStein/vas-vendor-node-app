@@ -44,6 +44,11 @@ export interface CableTvProvider {
 	): Promise<FelaInterface.VerifySmartCardNoResponse | FelaInterface.ErrorResponse>;
 }
 
+export interface Services {
+	services: {
+		[x: string]: string[];
+	};
+}
 export interface Response {
 	ok: boolean;
 }
@@ -52,5 +57,6 @@ export interface ErrorResponse extends Response {
 	data: {
 		type: ErrorType;
 		message: string;
+		details?: object;
 	};
 }

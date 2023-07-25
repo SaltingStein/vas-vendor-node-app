@@ -9,5 +9,5 @@ export enum OfferingName {
 }
 
 export enum PaymentMethod {
-	OFFLINE = "offinePay",
+	OFFLINE = "offlinePay",
 }

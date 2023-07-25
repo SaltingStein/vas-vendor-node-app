@@ -1,0 +1,63 @@
+[
+    {
+	"disco": "EKEDC",
+	"meterNumber":"62121312698",
+	"accountType": "prepaid",
+	"details": {
+        "name": "BENEDITH ONYEKWELU",
+        "address": "62 AKOGUN STREET,AJEGUNLE,null",
+        "phoneNumber": "08000000000",
+        "util": "EKEDC",
+        "minimumAmount": "1000"
+    }
+    },
+    {
+        "disco": "IKEDC",
+        "meterNumber":"45063198811",
+        "accountType": "prepaid",
+        "details": {
+            "name": "KOMOLAFE F",
+            "address": "36 AGORO STR OKERUBE LAGOS",
+            "phoneNumber": "",
+            "util": "IKEDC",
+            "minimumAmount": "1000"
+    }
+    },
+    {
+        "disco": "PHEDC",
+        "meterNumber":"0124001127784",
+        "accountType": "prepaid",
+        "details": {
+            "name": "CHIDI IHEANACHO",
+            "address": "22 IGBONI STREET  ",
+            "email": "services@myfela.ng",
+            "arrear": "0",
+            "metre_no": "0124001127784",
+            "bsc_name": "Abuloma ",
+            "ibc_name": "Garden City Industrial",
+            "cons_type": "PREPAID ",
+            "current_amount": 0,
+            "number": "812239171501B",
+            "phone": null,
+            "tarrif_code": "C-Non MD",
+            "total_bill": "0"
+    }
+    },
+    {
+        "disco": "BEDC",
+        "meterNumber":"04252163722",
+        "accountType": "prepaid",
+        "details": {
+            "name": "Ayodele 777 Faloye",
+            "address": "Road 4 New palace road",
+            "phoneNumber": "",
+            "arrears": "0",
+            "kct1": null,
+            "kct2": null,
+            "util": "BEDC",
+            "tarriffIndex": "19",
+            "tariff": 72.19,
+            "minimumAmount": "500"
+    }
+    }
+]

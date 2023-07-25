@@ -1,4 +1,6 @@
 import { PaidOfferingHandler } from "./core";
+import { Artifact } from "@components/artifact";
+import { Offering } from "@models/offering";
 export * from "./core";
 
 export const findOfferingHandler = async (name: string) => {
@@ -21,4 +23,9 @@ export const findOfferingHandler = async (name: string) => {
 	} catch (error) {
 		throw error;
 	}
+};
+
+export const createOffering = async (name: string) => {
+	const offering = await Offering.createOffering(name);
+	return new Artifact(offering, "Offering created Successfully");
 };

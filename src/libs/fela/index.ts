@@ -1,18 +1,20 @@
 import { InvalidArgumentError, ErrorType } from "@components/errors";
 import { App, Fela as FelaConfig } from "@config";
 import { AirtimeNetworks, DataNetworks } from "@components/enums";
-import { AirtimeProvider, DataProvider, ElectricityProvider, CableTvProvider } from "@components/interfaces";
+import { AirtimeProvider, DataProvider, ElectricityProvider, CableTvProvider, Services } from "@components/interfaces";
 import * as Interface from "./interfaces";
 import * as Enum from "./enums";
 const felaHeader = { Authorization: `Bearer ${FelaConfig.authToken}` };
 import axios from "axios";
 
 class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider>, CableTvProvider {
-	public services: object = {
-		airtime: ["mtn", "airtel", "glo", "etisalat"],
-		electricity: ["AEDC", "EKEDC", "EEDC", "IKEDC", "JEDC", "KAEDCO", "KEDCO", "BEDC"],
-		cableTv: ["dstv", "gotv", "startimes", "showmax"],
-		dataBundle: ["mtn", "airtel", "glo", "etisalat", "smile", "spectranet"],
+	public services: Services = {
+		services: {
+			airtime: ["MTN", "Airtel", "Glo", "Etisalat"],
+			electricity: ["AEDC", "EKEDC", "EEDC", "IKEDC", "JEDC", "KAEDCO", "KEDCO", "BEDC"],
+			cableTv: ["dstv", "gotv", "startimes", "showmax"],
+			dataBundle: ["mtn", "airtel", "glo", "etisalat", "smile", "spectranet"],
+		},
 	};
 	public async vendAirtime(
 		requestData: Interface.VendAirtimeRequestData,
@@ -60,16 +62,25 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			console.error(`Error vending ${requestData.network} airtime`);
 			if (error.response) {
 				console.error(error.response.data);
+				return {
+					ok: false,
+					data: {
+						type: ErrorType.SERVICEUNAVAILABLE,
+						message: `Error vending ${requestData.network} airtime`,
+						details: error.response.data,
+					},
+				};
 			} else {
 				console.error(error);
+				return {
+					ok: false,
+					data: {
+						type: ErrorType.SERVICEUNAVAILABLE,
+						message: `Error vending ${requestData.network} airtime`,
+						details: error.response,
+					},
+				};
 			}
-			return {
-				ok: false,
-				data: {
-					type: ErrorType.SERVICEUNAVAILABLE,
-					message: `Error vending ${requestData.network} airtime`,
-				},
-			};
 		}
 	}
 
@@ -110,7 +121,7 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 		}
 	}
 
-	public async getAirtimeNetwork(network: string) {
+	public getAirtimeNetwork(network: string) {
 		const networks = Object.values(AirtimeNetworks);
 		const networkExist = false;
 
@@ -163,16 +174,25 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			console.error(`Error vending ${requestData.network} databundle`);
 			if (error.response) {
 				console.error(error.response.data);
+				return {
+					ok: false,
+					data: {
+						type: ErrorType.SERVICEUNAVAILABLE,
+						message: `Error vending ${requestData.network} databundle`,
+						details: error.response.data,
+					},
+				};
 			} else {
 				console.error(error);
+				return {
+					ok: false,
+					data: {
+						type: ErrorType.SERVICEUNAVAILABLE,
+						message: `Error vending ${requestData.network} databundle`,
+						details: error.response,
+					},
+				};
 			}
-			return {
-				ok: false,
-				data: {
-					type: ErrorType.SERVICEUNAVAILABLE,
-					message: `Error vending ${requestData.network} databundle`,
-				},
-			};
 		}
 	}
 
@@ -214,26 +234,14 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 	public async getDatabundles(provider: string): Promise<Interface.FetchDatabundleResponse | Interface.ErrorResponse> {
 		try {
 			const { data } = await axios.get(`${FelaConfig.baseUrl}/list/dataBundles?provider_code=${provider}`, { headers: felaHeader });
-			const databundles: {
-				code: string;
-				title: string;
-				price: number;
-			}[] = [];
 
 			//check for possible empty {data}
 			if (Object.keys(data.data).length > 0) {
-				for (const key in data.data) {
-					databundles.push({
-						code: data.data[key].code,
-						title: data.data[key].title,
-						price: data.data[key].price,
-					});
-				}
 				return {
 					ok: true,
 					data: {
 						provider: provider,
-						dataBundles: databundles,
+						dataBundles: data.data,
 					},
 				};
 			} else {
@@ -270,13 +278,13 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			const { data } = await this.getDatabundles(provider);
 			if ("dataBundles" in data) {
 				let response: Interface.GetDatabundleAmountResponse | null = null;
-				for (const iterator of data.dataBundles) {
-					if (iterator.code === bundleCode) {
+				for (const iterator in data.dataBundles) {
+					if (iterator === bundleCode) {
 						response = {
 							ok: true,
 							data: {
-								price: iterator.price,
-								name: iterator.title,
+								price: data.dataBundles[iterator].price,
+								name: data.dataBundles[iterator].title,
 							},
 						};
 					}
@@ -401,23 +409,6 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			});
 
 			if (Object.keys(data.data).length > 0) {
-				// const response: {
-				// 	code: string;
-				// 	title: string;
-				// 	serviceCodes: {
-				// 		code: string;
-				// 		title: string;
-				// 	}[];
-				// }[] = [];
-				// for (const iterator in data.data) {
-				// 	const provider = data.data[iterator];
-				// 	response.push({
-				// 		code: provider.code,
-				// 		title: provider.title,
-				// 		serviceCodes: provider.packages,
-				// 	});
-				// }
-
 				return {
 					ok: true,
 					data: data.data,
@@ -453,7 +444,7 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 	): Promise<Interface.VerifyMeterNoResponse | Interface.ErrorResponse> {
 		try {
 			const params = {
-				number: requestData.meterNo,
+				number: requestData.meterNumber,
 				provider_code: requestData.disco,
 				service_code: requestData.serviceCode,
 			};
@@ -496,16 +487,26 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			console.error(`Error fetching meter No information`);
 			if (error.response) {
 				console.error(error.response.data);
+				return {
+					ok: false,
+					data: {
+						type: error.response?.data?.code === 404 ? ErrorType.NOTFOUND : ErrorType.SERVICEUNAVAILABLE,
+						message:
+							error.response?.data?.code === 404
+								? error.response?.data?.message
+								: "An error occurred while fetching meter No information. Please try again",
+					},
+				};
 			} else {
 				console.error(error);
+				return {
+					ok: false,
+					data: {
+						type: ErrorType.SERVICEUNAVAILABLE,
+						message: "An error occurred while fetching meter No information. Please try again",
+					},
+				};
 			}
-			return {
-				ok: false,
-				data: {
-					type: ErrorType.SERVICEUNAVAILABLE,
-					message: "An error occurred while fetching meter No information. Please try again",
-				},
-			};
 		}
 	}
 
@@ -652,7 +653,7 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			// const { data } = callResp;
 			if (ok) {
 				let response: any;
-				for (const bouquet of Object.values(data)) {
+				for (const bouquet of Object.values(data as unknown as Interface.GetBouquetAmountResponse)) {
 					if (bouquet.code === bouquetCode) {
 						response = {
 							ok: true,
@@ -702,7 +703,7 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			const { data, ok } = await this.fetchCabletvProviders();
 			let response: Interface.GetProviderPropertyResponse | null = null;
 			if (ok) {
-				for (const provider of Object.values(data)) {
+				for (const provider of Object.values(data as unknown as Interface.GetProviderPropertyResponse)) {
 					if (provider.code === providerCode) {
 						response = {
 							ok: true,
@@ -752,7 +753,7 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			let response: Interface.GetProviderPropertyResponse | null = null;
 
 			if (ok) {
-				for (const provider of Object.values(data)) {
+				for (const provider of Object.values(data as unknown as Interface.GetProviderPropertyResponse)) {
 					if (provider.title === providerName) {
 						response = {
 							ok: true,
@@ -825,16 +826,25 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			console.error(`Error verifying smartcard No`);
 			if (error.response) {
 				console.error(error.response.data);
+				return {
+					ok: false,
+					data: {
+						type: ErrorType.SERVICEUNAVAILABLE,
+						message: "Error verifying smartcard No. Please try again",
+						details: error.response.data,
+					},
+				};
 			} else {
 				console.error(error);
+				return {
+					ok: false,
+					data: {
+						type: ErrorType.SERVICEUNAVAILABLE,
+						message: "Error verifying smartcard No. Please try again",
+						details: error.response,
+					},
+				};
 			}
-			return {
-				ok: false,
-				data: {
-					type: ErrorType.SERVICEUNAVAILABLE,
-					message: "Error verifying smartcard No. Please try again",
-				},
-			};
 		}
 	}
 }

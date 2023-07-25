@@ -63,9 +63,9 @@ export const validateRequest = (req: express.Request, options: Partial<Validator
 	const errors = validationResult(req).formatWith(errorFormatter);
 	if (!errors.isEmpty()) {
 		App.ErrorHandler.handle(
-			new ValidationError().setData({ validation_failed: true, errors: errors.array({ onlyFirstError: true }) }).setInput(req.body),
+			new ValidationError().setData({ validationFailed: true, errors: errors.array({ onlyFirstError: true }) }).setInput(req.body),
 		);
-		throw new ValidationError().setData({ validation_failed: true, errors: errors.array({ onlyFirstError: true }) }).setInput(req.body);
+		throw new ValidationError().setData({ validationFailed: true, errors: errors.array({ onlyFirstError: true }) }).setInput(req.body);
 	}
 	const data = matchedData(req, {
 		onlyValidData: options.onlyValidData || true,
@@ -97,6 +97,7 @@ export const defaultRequestHandler = (controllerFn: any, options: Partial<Valida
 	const handler = async (req: express.Request, res: express.Response) => {
 		try {
 			const data = validateRequest(req, { ...defaultOptions, ...options });
+			console.log("VALIDATION DATA", data);
 			const result = await controllerFn(data, (req as any).client);
 			if (result instanceof Artifact) {
 				const response = new ApiResponse(result.data, result.message || "Request successful");

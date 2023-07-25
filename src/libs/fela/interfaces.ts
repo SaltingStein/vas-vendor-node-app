@@ -27,7 +27,7 @@ export interface VerifySmartCardNoRequestData {
 	bouquetCode: string;
 }
 export interface VerifyMeterNoRequestData {
-	meterNo: string;
+	meterNumber: string;
 	disco: string;
 	serviceCode: string;
 }
@@ -173,10 +173,12 @@ export interface FetchDatabundleResponse extends Response {
 	data: {
 		provider: string;
 		dataBundles: {
-			code: string;
-			title: string;
-			price: number;
-		}[];
+			[T: string]: {
+				code: string;
+				title: string;
+				price: number;
+			};
+		};
 	};
 }
 

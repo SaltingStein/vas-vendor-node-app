@@ -5,6 +5,7 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import morgan from "morgan";
 import path from "path";
 import Config from "@config";
+import MySQLConnection from "@connections/mysql";
 
 const WeaverApp = new WeaverExpressApp({
 	routes,
@@ -35,8 +36,9 @@ WeaverApp.on(WeaverExpressAppEvents.PREINIT, (app: Application) => {
 	app.use(RestAuth);
 });
 
-WeaverApp.once(WeaverExpressAppEvents.ROUTES_DID_BIND, (app: Application) => {
+WeaverApp.once(WeaverExpressAppEvents.ROUTES_DID_BIND, async (app: Application) => {
 	Logger.info("App routes have been mounted");
+	await MySQLConnection;
 	// Do stuff
 });
 

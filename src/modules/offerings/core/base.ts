@@ -42,9 +42,10 @@ export class BaseOfferingHandler<T extends FulfillmentRequestData> {
 		try {
 			await this.validate();
 			const artifact = await this.value();
+			console.log("ARTIFACT IS RETURNED", artifact, this.getDescription());
 			artifact.setAsActivity({
-				key: `offering:${this.offering}:fulfil`,
-				description: await this.getDescription(),
+				key: `offering:${this.offering.name}:fulfil`,
+				description: this.getDescription(),
 				params: this.params || {},
 			});
 			return artifact;
@@ -57,7 +58,7 @@ export class BaseOfferingHandler<T extends FulfillmentRequestData> {
 		return true;
 	}
 
-	public async getDescription() {
+	public getDescription() {
 		return "";
 	}
 
@@ -80,13 +81,13 @@ export class BaseOfferingHandler<T extends FulfillmentRequestData> {
 		const constraints = await this.validator();
 		const errors = await validate(this.params, constraints);
 		if (errors.length > 0) {
-			throw new ValidationError().setData({ validation_failed: true, errors }).setInput(this.data);
+			throw new ValidationError().setData({ validationFailed: true, errors }).setInput(this.data);
 		}
 		return true;
 	}
 
 	public async init() {
-		this.offering = (await Offering.findByName(this.data.offering)) as DocumentType<IOffering>;
+		this.offering = (await Offering.findByName(this.data.params.productName)) as DocumentType<IOffering>;
 		this.params = this.data.params;
 		this.source = this.data.source;
 		return true;

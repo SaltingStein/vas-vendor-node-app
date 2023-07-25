@@ -4,6 +4,7 @@ export { ErrorResponse } from "@components/interfaces";
 
 export interface VerifyMeterNoRequestData {
 	meterNumber: string;
+	disco: string;
 	serviceCode: string;
 }
 
@@ -23,6 +24,7 @@ export interface VerifyMeterNoResponse extends Response {
 		address: string;
 		tarriffIndex: string;
 		arrear: string;
+		disco: string;
 	};
 }
 export interface getWalletBalanceResponse extends Response {

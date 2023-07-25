@@ -1,0 +1,113 @@
+[{
+	"providerId":"80",
+	"bouquets":{
+		"2516": {
+			"code": "2516",
+			"title": "Startimes Nova Daily",
+			"price": 90,
+			"slug": "STARTIMES_NOVA_DAILY"
+		},
+		"2517": {
+			"code": "2517",
+			"title": "Startimes Nova Weekly",
+			"price": 300,
+			"slug": "STARTIMES_NOVA_WEEKLY"
+		},
+		"2518": {
+			"code": "2518",
+			"title": "Startimes Nova Monthly",
+			"price": 900,
+			"slug": "STARTIMES_NOVA_MONTHLY"
+		},
+		"2519": {
+			"code": "2519",
+			"title": "Startimes Basic Daily",
+			"price": 160,
+			"slug": "STARTIMES_BASIC_DAILY"
+		},
+		"2520": {
+			"code": "2520",
+			"title": "Startimes Basic Weekly",
+			"price": 600,
+			"slug": "STARTIMES_BASIC_WEEKLY"
+		},
+		"2521": {
+			"code": "2521",
+			"title": "Startimes Basic Monthly",
+			"price": 1700,
+			"slug": "STARTIMES_BASIC_MONTHLY"
+		},
+		"2522": {
+			"code": "2522",
+			"title": "Startimes Classic Daily",
+			"price": 320,
+			"slug": "STARTIMES_CLASSIC_DAILY"
+		},
+		"2523": {
+			"code": "2523",
+			"title": "Startimes Classic Weekly",
+			"price": 1200,
+			"slug": "STARTIMES_CLASSIC_WEEKLY"
+		},
+		"2524": {
+			"code": "2524",
+			"title": "Startimes Classic Monthly",
+			"price": 2500,
+			"slug": "STARTIMES_CLASSIC_MONTHLY"
+		},
+		"2525": {
+			"code": "2525",
+			"title": "Startimes Smart Daily",
+			"price": 200,
+			"slug": "STARTIMES_SMART_DAILY"
+		},
+		"2526": {
+			"code": "2526",
+			"title": "Startimes Smart Weekly",
+			"price": 700,
+			"slug": "STARTIMES_SMART_WEEKLY"
+		},
+		"2527": {
+			"code": "2527",
+			"title": "Startimes Smart Monthly",
+			"price": 2200,
+			"slug": "STARTIMES_SMART_MONTHLY"
+		},
+		"2528": {
+			"code": "2528",
+			"title": "Startimes Super Daily",
+			"price": 400,
+			"slug": "STARTIMES_SUPER_DAILY"
+		},
+		"2529": {
+			"code": "2529",
+			"title": "Startimes Super Weekly",
+			"price": 1500,
+			"slug": "STARTIMES_SUPER_WEEKLY"
+		},
+		"2530": {
+			"code": "2530",
+			"title": "Startimes Super Monthly",
+			"price": 4200,
+			"slug": "STARTIMES_SUPER_MONTHLY"
+		},
+		"2531": {
+			"code": "2531",
+			"title": "Startimes French Monthly",
+			"price": 4500,
+			"slug": "STARTIMES_FRENCH_MONTHLY"
+		},
+		"2532": {
+			"code": "2532",
+			"title": "Startimes Chinese Monthly",
+			"price": 6600,
+			"slug": "STARTIMES_CHINESE_MONTHLY"
+		},
+		"2533": {
+			"code": "2533",
+			"title": "Startimes All Inclusive Monthly",
+			"price": 12000,
+			"slug": "STARTIMES_ALL_INCLUSIVE_MONTHLY"
+		}
+	}
+}]

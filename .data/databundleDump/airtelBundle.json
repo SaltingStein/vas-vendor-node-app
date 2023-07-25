@@ -1,0 +1,155 @@
+[{
+	"providerId": "Airtel",
+	"bundles": [
+		{
+			"code": "DATA-49.99",
+			"providerId": "Airtel",
+			"title": "40MB - 1day",
+			"price": 50
+		},
+		{
+			"code": "DATA-99",
+			"providerId": "Airtel",
+			"title": "100MB - 1day",
+			"price": 100
+		},
+		{
+			"code": "DATA-199.03",
+			"providerId": "Airtel",
+			"title": "200MB - 3days",
+			"price": 200
+		},
+		{
+			"code": "DATA-299.02",
+			"providerId": "Airtel",
+			"title": "350MB - 7days",
+			"price": 300
+		},
+		{
+			"code": "DATA-499",
+			"providerId": "Airtel",
+			"title": "750MB - 14days",
+			"price": 500
+		},
+		{
+			"code": "DATA-299.03",
+			"providerId": "Airtel",
+			"title": "1GB - 1day",
+			"price": 300
+		},
+		{
+			"code": "DATA-499.03",
+			"providerId": "Airtel",
+			"title": "2GB - 1day",
+			"price": 500
+		},
+		{
+			"code": "DATA-1499.03",
+			"providerId": "Airtel",
+			"title": "6GB - 7days",
+			"price": 1500
+		},
+		{
+			"code": "DATA-999",
+			"providerId": "Airtel",
+			"title": "1.5GB - 30days",
+			"price": 1000
+		},
+		{
+			"code": "DATA-1199",
+			"providerId": "Airtel",
+			"title": "2GB - 30days",
+			"price": 1200
+		},
+		{
+			"code": "DATA-1499.01",
+			"providerId": "Airtel",
+			"title": "3GB - 30days",
+			"price": 1500
+		},
+		{
+			"code": "DATA-1999",
+			"providerId": "Airtel",
+			"title": "4.5GB - 30days",
+			"price": 2000
+		},
+		{
+			"code": "DATA-2499.01",
+			"providerId": "Airtel",
+			"title": "6GB - 30days",
+			"price": 2500
+		},
+		{
+			"code": "DATA-2999.02",
+			"providerId": "Airtel",
+			"title": "10GB - 30days",
+			"price": 3000
+		},
+		{
+			"code": "DATA-3999.01",
+			"providerId": "Airtel",
+			"title": "11GB - 30days",
+			"price": 4000
+		},
+		{
+			"code": "DATA-4999",
+			"providerId": "Airtel",
+			"title": "20GB - 30days",
+			"price": 5000
+		},
+		{
+			"code": "DATA-7999.02",
+			"providerId": "Airtel",
+			"title": "25GB - 30days",
+			"price": 8000
+		},
+		{
+			"code": "DATA-9999",
+			"providerId": "Airtel",
+			"title": "40GB - 30days",
+			"price": 10000
+		},
+		{
+			"code": "DATA-14999",
+			"providerId": "Airtel",
+			"title": "75GB - 30days",
+			"price": 15000
+		},
+		{
+			"code": "DATA-19999.02",
+			"providerId": "Airtel",
+			"title": "120GB - 30days",
+			"price": 20000
+		},
+		{
+			"code": "DATA-29999.02",
+			"providerId": "Airtel",
+			"title": "200GB - 30days",
+			"price": 30000
+		},
+		{
+			"code": "DATA-35999.02",
+			"providerId": "Airtel",
+			"title": "280GB - 30days",
+			"price": 36000
+		},
+		{
+			"code": "DATA-49999.02",
+			"providerId": "Airtel",
+			"title": "400GB - 90days",
+			"price": 50000
+		},
+		{
+			"code": "DATA-59999.02",
+			"providerId": "Airtel",
+			"title": "500GB - 120days",
+			"price": 60000
+		},
+		{
+			"code": "DATA-99999.02",
+			"providerId": "Airtel",
+			"title": "1TB - 365days",
+			"price": 100000
+		}
+	]
+}]

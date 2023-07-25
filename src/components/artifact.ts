@@ -25,11 +25,12 @@ export class Artifact {
 	}
 
 	public setAsActivity(activity: ArtifactActivity) {
+		console.log("ACTIVITY IS HERE", activity);
 		this.activity = activity;
 		return this;
 	}
 
-	public andLogActivity({ source = null, sessionId = null }: any) {
+	public andLogActivity({ source = null, sessionId = null, sourceId = null }: any) {
 		if (!this.activityLogged && this.activity) {
 			this.activityLogged = true;
 			Activity.log({
@@ -38,6 +39,7 @@ export class Artifact {
 				key: this.activity.key,
 				description: this.activity.description,
 				params: this.activity.params || {},
+				sourceId,
 			});
 		}
 		return this;

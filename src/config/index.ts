@@ -26,7 +26,7 @@ const getLogPath = () => {
 
 const Config = Object.freeze({
 	App: {
-		NAME: "",
+		NAME: "Vas Vendor",
 		ENV,
 		PORT: getEnv<number>("PORT", 3200),
 		LOG_DIR: getLogPath(),
@@ -37,11 +37,15 @@ const Config = Object.freeze({
 		contactPhone: getEnv<string>("CONTACT_PHONE"),
 		LOG_TO_FILE: !!Number(getEnv<string>("ADD_FILE_LOGGING", "0")),
 		BASE_URL: getEnv<string>("BASE_URL") || "http://127.0.0.1:4600/",
+		JWT_SECRET: getEnv<string>("JWT_SECRET"),
 	},
 	Fela: {
 		sourceName: getEnv<string>("FELA_SOURCE"),
 		baseUrl: getEnv<string>("FELA_BASE_URL"),
 		authToken: getEnv<string>("FELA_AUTH_TOKEN"),
+	},
+	WP_CORE: {
+		url: getEnv<string>("WP_CORE_URL"),
 	},
 	Phedc: {
 		baseUrl: getEnv<string>("PHEDC_BASE_URL"),
@@ -53,6 +57,14 @@ const Config = Object.freeze({
 		port: Number(process.env.REDIS_PORT) || 6379,
 		password: process.env.REDIS_PASSWORD || "",
 		// tls: process.env.REDIS_TLS,
+	},
+	MySQL: {
+		database: process.env.MYSQL_DATABASE,
+		username: process.env.MYSQL_USERNAME,
+		password: process.env.MYSQL_PASSWORD,
+		host: process.env.MYSQL_HOST,
+		port: Number(process.env.MYSQL_PORT),
+		dialet: "mysql",
 	},
 	Db: {
 		MONGO_URI: process.env.MONGO_URI || "mongodb://localhost:27017/vasvending",

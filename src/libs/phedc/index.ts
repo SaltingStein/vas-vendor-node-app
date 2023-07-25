@@ -2,13 +2,18 @@
 
 import { Phedc as PhedcConfig, App } from "@config";
 import { ErrorType } from "@components/errors";
-import { ElectricityProvider } from "@components/interfaces";
+import { ElectricityProvider, Services } from "@components/interfaces";
 import * as Interface from "./interfaces";
 import * as Enums from "./enums";
 import axios from "axios";
 import moment from "moment";
 
 class Phedc implements Partial<ElectricityProvider> {
+	public services: Services = {
+		services: {
+			electricity: ["PHEDC"],
+		},
+	};
 	public async verifyMeter(
 		requestData: Interface.VerifyMeterNoRequestData,
 	): Promise<Interface.ErrorResponse | Interface.VerifyMeterNoResponse> {
@@ -30,6 +35,7 @@ class Phedc implements Partial<ElectricityProvider> {
 						name: data[0].name,
 						address: data[0].address,
 						tarriffIndex: data[0].number,
+						disco: "PHEDC",
 						arrear: data[0].arrear,
 					},
 				};

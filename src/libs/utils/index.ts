@@ -66,3 +66,14 @@ export function formatNumberAsCurrency(num: string | number) {
 	}
 	return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
+
+export function formatListResponse(data: object[]) {
+	let response: any = {};
+	for (const element of data) {
+		if ("code" in element) {
+			response = Object.assign(response, { [element.code as string]: element });
+		}
+	}
+
+	return response;
+}

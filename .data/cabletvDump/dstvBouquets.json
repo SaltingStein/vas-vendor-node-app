@@ -1,0 +1,215 @@
+[{
+	"providerId":"2",
+	"bouquets": {
+		"2321": {
+			"code": "2321",
+			"title": "Asia Standalone",
+			"price": 6200,
+			"slug": "ASIA_STANDALONE"
+		},
+		"2323": {
+			"code": "2323",
+			"title": "Compact",
+			"price": 7900,
+			"slug": "COMPACT"
+		},
+		"2324": {
+			"code": "2324",
+			"title": "Compact Plus",
+			"price": 12400,
+			"slug": "COMPACT_PLUS"
+		},
+		"2325": {
+			"code": "2325",
+			"title": "Premium",
+			"price": 18400,
+			"slug": "PREMIUM"
+		},
+		"2326": {
+			"code": "2326",
+			"title": "Premium Asia",
+			"price": 20500,
+			"slug": "PREMIUM_ASIA"
+		},
+		"2327": {
+			"code": "2327",
+			"title": "Premium French",
+			"price": 25550,
+			"slug": "PREMIUM_FRENCH"
+		},
+		"2328": {
+			"code": "2328",
+			"title": "Asia Add-on",
+			"price": 6200,
+			"slug": "ASIA_ADD_ON"
+		},
+		"2329": {
+			"code": "2329",
+			"title": "French Plus",
+			"price": 8100,
+			"slug": "FRENCH_PLUS"
+		},
+		"2330": {
+			"code": "2330",
+			"title": "French Touch",
+			"price": 2300,
+			"slug": "FRENCH_TOUCH"
+		},
+		"2331": {
+			"code": "2331",
+			"title": "French 11",
+			"price": 3260,
+			"slug": "FRENCH_11"
+		},
+		"2332": {
+			"code": "2332",
+			"title": "HDPVR Access_Extraview",
+			"price": 2500,
+			"slug": "HDPVR_ACCESS_EXTRAVIEW"
+		},
+		"2333": {
+			"code": "2333",
+			"title": "Box Office",
+			"price": 650,
+			"slug": "BOX_OFFICE"
+		},
+		"2344": {
+			"code": "2344",
+			"title": "Compact and HDPVR/Extraview",
+			"price": 10400,
+			"slug": "COMPACT_AND_HDPVR_EXTRAVIEW"
+		},
+		"2345": {
+			"code": "2345",
+			"title": "Compact Plus and HDPVR/Extraview",
+			"price": 14900,
+			"slug": "COMPACT_PLUS_AND_HDPVR_EXTRAVIEW"
+		},
+		"2346": {
+			"code": "2346",
+			"title": "Premium and HDPVR/Extraview",
+			"price": 20900,
+			"slug": "PREMIUM_AND_HDPVR_EXTRAVIEW"
+		},
+		"2425": {
+			"code": "2425",
+			"title": "Yanga",
+			"price": 2565,
+			"slug": "YANGA"
+		},
+		"2426": {
+			"code": "2426",
+			"title": "Confam",
+			"price": 4615,
+			"slug": "CONFAM"
+		},
+		"2429": {
+			"code": "2429",
+			"title": "Yanga and HDPVR/Extraview",
+			"price": 5065,
+			"slug": "YANGA_AND_HDPVR_EXTRAVIEW"
+		},
+		"2430": {
+			"code": "2430",
+			"title": "Confam and HDPVR/Extraview",
+			"price": 7115,
+			"slug": "CONFAM_AND_HDPVR_EXTRAVIEW"
+		},
+		"2431": {
+			"code": "2431",
+			"title": "Padi",
+			"price": 1850,
+			"slug": "PADI"
+		},
+		"2445": {
+			"code": "2445",
+			"title": "Padi and HDPVR/Extraview",
+			"price": 4350,
+			"slug": "PADI_AND_HDPVR_EXTRAVIEW"
+		},
+		"2446": {
+			"code": "2446",
+			"title": "Premium Asia and HDPVR Access_Extraview",
+			"price": 23000,
+			"slug": "PREMIUM_ASIA_AND_HDPVR_ACCESS_EXTRAVIEW"
+		},
+		"2447": {
+			"code": "2447",
+			"title": "Premium French and HDPVR Access_Extraview",
+			"price": 28050,
+			"slug": "PREMIUM_FRENCH_AND_HDPVR_ACCESS_EXTRAVIEW"
+		},
+		"2448": {
+			"code": "2448",
+			"title": "Great Wall",
+			"price": 1285,
+			"slug": "GREAT_WALL"
+		},
+		"2449": {
+			"code": "2449",
+			"title": "Compact and Asia and HDPVR/Extraview",
+			"price": 16600,
+			"slug": "COMPACT_AND_ASIA_AND_HDPVR_EXTRAVIEW"
+		},
+		"2450": {
+			"code": "2450",
+			"title": "Compact and Asia",
+			"price": 14100,
+			"slug": "COMPACT_AND_ASIA"
+		},
+		"2451": {
+			"code": "2451",
+			"title": "Compact and French Touch",
+			"price": 10200,
+			"slug": "COMPACT_AND_FRENCH_TOUCH"
+		},
+		"2452": {
+			"code": "2452",
+			"title": "Compact and French Plus",
+			"price": 16000,
+			"slug": "COMPACT_AND_FRENCH_PLUS"
+		},
+		"2453": {
+			"code": "2453",
+			"title": "Compact and French Touch and HDPVR/Extraview",
+			"price": 12700,
+			"slug": "COMPACT_AND_FRENCH_TOUCH_AND_HDPVR_EXTRAVIEW"
+		},
+		"2454": {
+			"code": "2454",
+			"title": "Compact Plus and Asia and HDPVR/Extraview",
+			"price": 21100,
+			"slug": "COMPACT_PLUS_AND_ASIA_AND_HDPVR_EXTRAVIEW"
+		},
+		"2455": {
+			"code": "2455",
+			"title": "Compact Plus and French Plus and HDPVR/Extraview",
+			"price": 23000,
+			"slug": "COMPACT_PLUS_AND_FRENCH_PLUS_AND_HDPVR_EXTRAVIEW"
+		},
+		"2456": {
+			"code": "2456",
+			"title": "Compact Plus and Asia",
+			"price": 18600,
+			"slug": "COMPACT_PLUS_AND_ASIA"
+		},
+		"2457": {
+			"code": "2457",
+			"title": "Compact Plus and French Touch",
+			"price": 14700,
+			"slug": "COMPACT_PLUS_AND_FRENCH_TOUCH"
+		},
+		"2458": {
+			"code": "2458",
+			"title": "Compact Plus and French Plus",
+			"price": 20500,
+			"slug": "COMPACT_PLUS_AND_FRENCH_PLUS"
+		},
+		"4074": {
+			"code": "4074",
+			"title": "DSTV Top Up",
+			"price": 1000,
+			"slug": "DSTV_TOP_UP"
+		}
+	}
+}]

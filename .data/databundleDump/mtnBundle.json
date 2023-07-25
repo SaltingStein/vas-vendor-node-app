@@ -1,0 +1,395 @@
+[{
+	"providerId": "MTN",
+	"bundles": [
+		{
+			"code": "DATA-01",
+			"providerId": "MTN",
+			"title": "75MB - 1day",
+			"price": 100
+		},
+		{
+			"code": "DATA-02",
+			"providerId": "MTN",
+			"title": "200MB - 1day",
+			"price": 200
+		},
+		{
+			"code": "DATA-03",
+			"providerId": "MTN",
+			"title": "350MB - 7days",
+			"price": 300
+		},
+		{
+			"code": "DATA-04",
+			"providerId": "MTN",
+			"title": "750MB 2-Week Plan - 7days",
+			"price": 500
+		},
+		{
+			"code": "DATA-05",
+			"providerId": "MTN",
+			"title": "2GB - 30days",
+			"price": 1200
+		},
+		{
+			"code": "DATA-06",
+			"providerId": "MTN",
+			"title": "1.5GB - 30days",
+			"price": 1000
+		},
+		{
+			"code": "DATA-07",
+			"providerId": "MTN",
+			"title": "1GB - 1day",
+			"price": 300
+		},
+		{
+			"code": "DATA-08",
+			"providerId": "MTN",
+			"title": "750MB - 7days",
+			"price": 500
+		},
+		{
+			"code": "DATA-09",
+			"providerId": "MTN",
+			"title": "3GB - 30days",
+			"price": 1500
+		},
+		{
+			"code": "DATA-10",
+			"providerId": "MTN",
+			"title": "325GB - 180days",
+			"price": 100000
+		},
+		{
+			"code": "DATA-11",
+			"providerId": "MTN",
+			"title": "1000GB - 365days",
+			"price": 300000
+		},
+		{
+			"code": "DATA-12",
+			"providerId": "MTN",
+			"title": "1500GB - 365days",
+			"price": 450000
+		},
+		{
+			"code": "DATA-13",
+			"providerId": "MTN",
+			"title": "2GB - 2days",
+			"price": 500
+		},
+		{
+			"code": "DATA-14",
+			"providerId": "MTN",
+			"title": "2.5GB - 2days",
+			"price": 500
+		},
+		{
+			"code": "DATA-15",
+			"providerId": "MTN",
+			"title": "400GB - 365days",
+			"price": 120000
+		},
+		{
+			"code": "DATA-16",
+			"providerId": "MTN",
+			"title": "75GB - 60days",
+			"price": 20000
+		},
+		{
+			"code": "DATA-17",
+			"providerId": "MTN",
+			"title": "120GB - 60days",
+			"price": 30000
+		},
+		{
+			"code": "DATA-18",
+			"providerId": "MTN",
+			"title": "150GB - 90days",
+			"price": 50000
+		},
+		{
+			"code": "DATA-19",
+			"providerId": "MTN",
+			"title": "250GB - 90days",
+			"price": 75000
+		},
+		{
+			"code": "DATA-20",
+			"providerId": "MTN",
+			"title": "25GB - 30days",
+			"price": 6000
+		},
+		{
+			"code": "DATA-21",
+			"providerId": "MTN",
+			"title": "1GB - 7days",
+			"price": 500
+		},
+		{
+			"code": "DATA-22",
+			"providerId": "MTN",
+			"title": "6GB - 7days",
+			"price": 1500
+		},
+		{
+			"code": "DATA-23",
+			"providerId": "MTN",
+			"title": "6GB - 30days",
+			"price": 2500
+		},
+		{
+			"code": "DATA-24",
+			"providerId": "MTN",
+			"title": "10GB - 30days",
+			"price": 3000
+		},
+		{
+			"code": "DATA-25",
+			"providerId": "MTN",
+			"title": "110GB - 30days",
+			"price": 20000
+		},
+		{
+			"code": "DATA-26",
+			"providerId": "MTN",
+			"title": "25GB SME - 30days",
+			"price": 10000
+		},
+		{
+			"code": "DATA-27",
+			"providerId": "MTN",
+			"title": "35GB SME - 30days",
+			"price": 13500
+		},
+		{
+			"code": "DATA-28",
+			"providerId": "MTN",
+			"title": "165GB SME - 60days",
+			"price": 50000
+		},
+		{
+			"code": "DATA-29",
+			"providerId": "MTN",
+			"title": "360GB SME - 90days",
+			"price": 100000
+		},
+		{
+			"code": "DATA-30",
+			"providerId": "MTN",
+			"title": "1TB SME - 90days",
+			"price": 250000
+		},
+		{
+			"code": "DATA-31",
+			"providerId": "MTN",
+			"title": "1 Month All day Plan - 30days",
+			"price": 2000
+		},
+		{
+			"code": "DATA-32",
+			"providerId": "MTN",
+			"title": "12GB - 30days",
+			"price": 3500
+		},
+		{
+			"code": "DATA-33",
+			"providerId": "MTN",
+			"title": "20GB - 30days",
+			"price": 5000
+		},
+		{
+			"code": "DATA-34",
+			"providerId": "MTN",
+			"title": "40GB - 30days",
+			"price": 10000
+		},
+		{
+			"code": "DATA-35",
+			"providerId": "MTN",
+			"title": "75GB - 30days",
+			"price": 15000
+		},
+		{
+			"code": "DATA-36",
+			"providerId": "MTN",
+			"title": "Xtratalk 300 - 7days",
+			"price": 300
+		},
+		{
+			"code": "DATA-37",
+			"providerId": "MTN",
+			"title": "Xtratalk 500 - 7days",
+			"price": 500
+		},
+		{
+			"code": "DATA-38",
+			"providerId": "MTN",
+			"title": "Xtratalk 1000 - 30days",
+			"price": 1000
+		},
+		{
+			"code": "DATA-39",
+			"providerId": "MTN",
+			"title": "Xtratalk 2000 - 30days",
+			"price": 2000
+		},
+		{
+			"code": "DATA-40",
+			"providerId": "MTN",
+			"title": "Xtratalk 5000 - 30days",
+			"price": 5000
+		},
+		{
+			"code": "DATA-41",
+			"providerId": "MTN",
+			"title": "Xtratalk 10000 - 30days",
+			"price": 10000
+		},
+		{
+			"code": "DATA-42",
+			"providerId": "MTN",
+			"title": "Xtratalk 15000 - 30days",
+			"price": 15000
+		},
+		{
+			"code": "DATA-43",
+			"providerId": "MTN",
+			"title": "Xtratalk 20000 - 30days",
+			"price": 20000
+		},
+		{
+			"code": "DATA-44",
+			"providerId": "MTN",
+			"title": "Xtradata 300 - 7days",
+			"price": 300
+		},
+		{
+			"code": "DATA-45",
+			"providerId": "MTN",
+			"title": "Xtradata 500 - 7days",
+			"price": 500
+		},
+		{
+			"code": "DATA-46",
+			"providerId": "MTN",
+			"title": "Xtradata 1000 - 30days",
+			"price": 1000
+		},
+		{
+			"code": "DATA-47",
+			"providerId": "MTN",
+			"title": "Xtradata 2000 - 30days",
+			"price": 2000
+		},
+		{
+			"code": "DATA-48",
+			"providerId": "MTN",
+			"title": "Xtradata 5000 - 30days",
+			"price": 5000
+		},
+		{
+			"code": "DATA-49",
+			"providerId": "MTN",
+			"title": "Xtradata 10000 - 30days",
+			"price": 10000
+		},
+		{
+			"code": "DATA-50",
+			"providerId": "MTN",
+			"title": "Xtradata 15000 - 30days",
+			"price": 15000
+		},
+		{
+			"code": "DATA-51",
+			"providerId": "MTN",
+			"title": "Xtradata 20000 - 30days",
+			"price": 20000
+		},
+		{
+			"code": "DATA-52",
+			"providerId": "MTN",
+			"title": "30GB HyNetFlex - 30days",
+			"price": 8000
+		},
+		{
+			"code": "DATA-53",
+			"providerId": "MTN",
+			"title": "45GB HyNetFlex - 30days",
+			"price": 11000
+		},
+		{
+			"code": "DATA-54",
+			"providerId": "MTN",
+			"title": "100GB HyNetFlex - 30days",
+			"price": 18000
+		},
+		{
+			"code": "DATA-55",
+			"providerId": "MTN",
+			"title": "200GB HyNetFlex - 30days",
+			"price": 25000
+		},
+		{
+			"code": "DATA-56",
+			"providerId": "MTN",
+			"title": "300GB HyNetFlex - 60days",
+			"price": 36000
+		},
+		{
+			"code": "DATA-57",
+			"providerId": "MTN",
+			"title": "400GB HyNetFlex - 90days",
+			"price": 45000
+		},
+		{
+			"code": "DATA-58",
+			"providerId": "MTN",
+			"title": "1TB HyNetFlex - 180days",
+			"price": 90000
+		},
+		{
+			"code": "DATA-59",
+			"providerId": "MTN",
+			"title": "2TB HyNetFlex - 365days",
+			"price": 150000
+		},
+		{
+			"code": "DATA-60",
+			"providerId": "MTN",
+			"title": "30GB HyNetFlex Unlimited - 7days",
+			"price": 5000
+		},
+		{
+			"code": "DATA-61",
+			"providerId": "MTN",
+			"title": "130GB HyNetFlex Unlimited - 30days",
+			"price": 20000
+		},
+		{
+			"code": "DATA-62",
+			"providerId": "MTN",
+			"title": "250GB HyNetFlex Unlimited - 30days",
+			"price": 30000
+		},
+		{
+			"code": "DATA-63",
+			"providerId": "MTN",
+			"title": "500GB HyNetFlex Unlimited - 30days",
+			"price": 45000
+		},
+		{
+			"code": "DATA-64",
+			"providerId": "MTN",
+			"title": "800GB HyNetFlex Unlimited - 30days",
+			"price": 60000
+		},
+		{
+			"code": "DATA-65",
+			"providerId": "MTN",
+			"title": "2.5TB HyNetFlex Unlimited - 180days",
+			"price": 165000
+		}
+	]
+}]

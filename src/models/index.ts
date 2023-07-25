@@ -7,6 +7,6 @@ export * from "@models/order";
 export * from "@models/payment";
 export * from "@models/user";
 export * from "@models/helper";
-export * from "@models/change-history";
+export * from "@models/meterNumbers";
 export { DocumentType, ReturnModelType } from "@typegoose/typegoose";
 export { forcePopulation, isObjectId, isOf } from "@models/helper";

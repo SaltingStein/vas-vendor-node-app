@@ -1,0 +1,137 @@
+[
+    {
+        "code": "AEDC",
+        "title": "Abuja Electricity (AEDC)",
+        "index": 0,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    },
+    {
+        "code": "EKEDC",
+        "title": "Eko Electricity (EKEDC)",
+        "index": 1,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    },
+    {
+        "code": "EEDC",
+        "title": "Enugu Electricity (EEDC)",
+        "index": 2,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    },
+    {
+        "code": "IKEDC",
+        "title": "Ikeja Electricity (IKEDC)",
+        "index": 3,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    },
+    {
+        "code": "JEDC",
+        "title": "Jos Electricity (JEDC)",
+        "index": 4,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    },
+    {
+        "code": "KAEDCO",
+        "title": "Kaduna Electricity (KAEDCO)",
+        "index": 5,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    },
+    {
+        "code": "KEDCO",
+        "title": "Kano Electricity (KEDCO)",
+        "index": 6,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    },
+    {
+        "code": "PHEDC",
+        "title": "Port Harcourt Electricity (PHEDC)",
+        "index": 7,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    },
+    {
+        "code": "BEDC",
+        "title": "Benin Electricity (BEDC)",
+        "index": 8,
+        "packages": [
+            {
+                "code": "prepaid",
+                "title": "Prepaid"
+            },
+            {
+                "code": "postpaid",
+                "title": "Postpaid"
+            }
+        ]
+    }
+]

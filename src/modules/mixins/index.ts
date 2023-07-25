@@ -82,15 +82,11 @@ export const singleArgAssert = (...keys: string[]) => {
 				// tslint:disable-next-line: max-line-length
 				App.ErrorHandler.handle(
 					new InvalidArgumentError(
-						`Required parameters [${invalid.join(", ")}] are missing. Check documentation for properly invoking ${
-							target.constructor.name
-						}.${property}`,
+						`Required parameters [${invalid.join(", ")}] are missing. Check documentation for properly invoking ${property}`,
 					),
 				);
 				throw new InvalidArgumentError(
-					`Required parameters [${invalid.join(", ")}] are missing. Check documentation for properly invoking ${
-						target.constructor.name
-					}.${property}`,
+					`Required parameters [${invalid.join(", ")}] are missing. Check documentation for properly invoking ${property}`,
 				);
 			}
 			return await method.apply(this, args);

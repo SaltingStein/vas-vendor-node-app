@@ -29,7 +29,7 @@ export class IPayment extends MyGoose {
 	@sortable()
 	public method!: string;
 
-	@prop({ required: true })
+	@prop({ default: 0 })
 	@Field()
 	@filterable()
 	@sortable()

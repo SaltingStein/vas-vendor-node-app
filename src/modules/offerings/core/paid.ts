@@ -1,5 +1,6 @@
 import { Artifact } from "@components/artifact";
-import { OrderStatus, OrderData, IOrder } from "@components/order";
+import { OrderStatus, OrderData } from "@components/order";
+import { Order, IOrder } from "@models";
 import { BaseOfferingHandler, FulfillmentRequestData } from "./base";
 
 export interface PaymentMetadata {
@@ -8,6 +9,7 @@ export interface PaymentMetadata {
 }
 
 export class PaidOfferingHandler extends BaseOfferingHandler<FulfillmentRequestData> {
+	private order: any;
 	public async getAmount(): Promise<number> {
 		throw new Error("Base has no usable implementation. Child classes must implement this method");
 	}
@@ -17,46 +19,66 @@ export class PaidOfferingHandler extends BaseOfferingHandler<FulfillmentRequestD
 	}
 
 	public async fulfil() {
+		let artifact = new Artifact();
+		const order = await this.getOrder();
 		try {
-			let artifact = new Artifact();
-			const orderDetails: OrderData = new IOrder(
-				await this.getDescription(),
-				this.source.sourceId,
-				this.offering.name,
-				this.params.productType,
-				this.params.providerCode,
-				this.params.providerId,
-				this.source.sessionId,
-				this.params.amount,
-				OrderStatus.PROCESSING,
-			);
-			try {
-				artifact = await super.fulfil();
-			} catch (error: any) {
-				orderDetails.status = OrderStatus.FAILED;
-				orderDetails.failureReason = error;
-				// await (this.data as OfferingOrder).save();
-				// Event.emit(EventType.ORDER_FAILED, {
-				// 	order: this.data as OfferingOrder,
-				// 	handler: this,
-				// } as OrderFailedEvent);
-				throw error;
-			}
-			orderDetails.artifact = artifact as any;
-			orderDetails.status = OrderStatus.COMPLETED;
-			// (this.data as OfferingOrder).markModified("artifact");
+			artifact = await super.fulfil();
+			order.artifact = artifact;
+			order.status = OrderStatus.COMPLETED;
+			order.description = this.getDescription();
+			order.markModified("artifact");
+			const payment = this.order.payment;
+			payment.description = this.getDescription();
+			payment.amount = this.params.amount;
+			payment.isFulfilled = true;
+			payment.fulfilledAt = new Date();
+			await Promise.all([order.save(), payment.save()]);
 			return artifact.andLogActivity({
-				phone: this.source.sourceId,
+				sourceId: this.source.sourceId,
 				source: this.source.source,
 				sessionId: this.source.sessionId,
 			});
-		} catch (error) {
+		} catch (error: any) {
+			order.description = this.getDescription();
+			order.status = OrderStatus.FAILED;
+			order.lastError = error.maskedData || error;
+			const payment = this.order.payment;
+			payment.description = this.getDescription();
+			await Promise.all([order.save(), payment.save()]);
 			throw error;
 		}
 	}
 
 	public async init() {
-		super.init();
+		await super.init();
 		return true;
+	}
+
+	public async getOrder() {
+		return this.order;
+	}
+
+	public async setOrder(order: any) {
+		this.order = order;
+		return;
+	}
+
+	public async processOrder(orderId: string) {
+		try {
+			const order = await Order.load(orderId);
+			if (!order) {
+				throw new Error("Order not found in DB");
+			}
+
+			order.status = OrderStatus.PROCESSING;
+			await order.save();
+
+			await this.setOrder(order);
+
+			return await this.fulfil();
+		} catch (error) {
+			console.log("I ALSO GOT HERE", error);
+			throw error;
+		}
 	}
 }

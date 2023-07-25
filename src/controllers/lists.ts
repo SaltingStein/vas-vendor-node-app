@@ -11,7 +11,7 @@ interface IQuery {
 export const fetch = async ({ name, ...filters }: IQuery) => {
 	if (!listSources[name]) {
 		App.ErrorHandler.handle(new NotFoundError(`List ${name} does not exist`));
-		throw new NotFoundError(`List ${name} does not exist`);
+		throw new NotFoundError(`Resource not found`);
 	}
 	return new Artifact(await listSources[name](filters), "List successfully fetched");
 };

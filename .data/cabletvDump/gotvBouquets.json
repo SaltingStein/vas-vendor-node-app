@@ -1,0 +1,47 @@
+[{
+	"providerId":"3",
+	"bouquets": {
+		"2336": {
+			"code": "2336",
+			"title": "GOtv Smallie Monthly",
+			"price": 800,
+			"slug": "GOTV_SMALLIE_MONTHLY"
+		},
+		"2337": {
+			"code": "2337",
+			"title": "GOtv Smallie Quarterly",
+			"price": 2100,
+			"slug": "GOTV_SMALLIE_QUARTERLY"
+		},
+		"2338": {
+			"code": "2338",
+			"title": "GOtv Smallie Yearly",
+			"price": 6200,
+			"slug": "GOTV_SMALLIE_YEARLY"
+		},
+		"2339": {
+			"code": "2339",
+			"title": "Gotv Max",
+			"price": 3600,
+			"slug": "GOTV_MAX"
+		},
+		"2427": {
+			"code": "2427",
+			"title": "Jinja",
+			"price": 1640,
+			"slug": "JINJA"
+		},
+		"2428": {
+			"code": "2428",
+			"title": "Jolli",
+			"price": 2460,
+			"slug": "JOLLI"
+		},
+		"4075": {
+			"code": "4075",
+			"title": "GOTV Top Up",
+			"price": 1000,
+			"slug": "GOTV_TOP_UP"
+		}
+	}
+}]

@@ -1,9 +1,9 @@
 import { Artifact } from "@components/artifact";
-import { ServiceUnavailableError } from "@components/errors";
+import { BadRequestError, ServerError, ServiceUnavailableError, ErrorType } from "@components/errors";
 import { AirtimeProvider } from "@components/interfaces";
-import { sanitizePhoneNumber } from "@libs/utils";
+import { sanitizePhoneNumber, getUniqueReference } from "@libs/utils";
 import { AirtimeNetworks } from "@components/enums";
-import { node, PaidOfferingHandler } from "@modules/offerings";
+import { node, PaidOfferingHandler } from "@modules/offerings/index";
 import { AirtimeDataBundleFacade } from "@modules/service-facades";
 import moment from "moment-timezone";
 moment.tz.setDefault("Africa/Lagos");
@@ -12,32 +12,39 @@ class Airtime extends PaidOfferingHandler {
 	private vendor!: AirtimeProvider;
 
 	public async value() {
-		const { data, ok } = await this.vendor.vendAirtime({
+		console.log("VENDOR IS HERE", this.vendor, this.params);
+		const result = (await this.vendor.vendAirtime({
 			amount: this.params.amount,
-			recipient: this.params.recipient,
-			transactionRef: this.source.sessionId,
-			network: this.params.network,
-			merchantId: this.source?.sourceId as string,
-		});
-
+			recipient: this.params.providerId,
+			transactionRef: this.params.transactionReference,
+			network: this.params.productType,
+			merchantId: this.source.sourceId,
+		})) as any;
+		const { data, ok } = result;
 		if (ok) {
 			return new Artifact(data, "Fulfillment Successful");
 		}
-
-		throw new ServiceUnavailableError("Airtime:Fulfillment").setData({ request: this.data, response: data, params: this.params });
+		switch (data.type) {
+			case ErrorType.SERVICEUNAVAILABLE:
+				throw new ServiceUnavailableError(data.message).setData(data);
+			case ErrorType.BADREQUEST:
+				throw new BadRequestError(data.message).setData(data);
+			default:
+				throw new ServerError().setData(data);
+		}
 	}
 
 	public async getAmount() {
 		return await this.init().then(() => this.params.amount);
 	}
 
-	public async getDescription() {
-		return `N${this.params.amount} ${this.params.network} Airtime for ${this.params.recipient}`;
+	public getDescription() {
+		return `N${this.params.amount} ${this.params.productType} Airtime for ${this.params.providerId}`;
 	}
 
-	// public async beforePayment() {
-	// 	this.params.numberRef = ;
-	// }
+	public async beforePayment() {
+		this.data.params.transactionReference = getUniqueReference();
+	}
 
 	public async validator() {
 		return [
@@ -57,13 +64,13 @@ class Airtime extends PaidOfferingHandler {
 			node("productType")
 				.exists()
 				.isIn(Object.values(AirtimeNetworks))
-				.withMessage(`network should be any of ${Object.values(AirtimeNetworks)}`),
+				.withMessage(`ProductType should be any of ${Object.values(AirtimeNetworks)}`),
 		];
 	}
 
 	public async init() {
 		const init = await super.init();
-		this.vendor = await AirtimeDataBundleFacade.airtimeVendor(this.params.network);
+		this.vendor = await AirtimeDataBundleFacade.airtimeVendor(this.params.productType);
 		return init;
 	}
 }

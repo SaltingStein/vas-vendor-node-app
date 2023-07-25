@@ -1,0 +1,131 @@
+[{
+	"providerId": "Glo",
+	"bundles": [
+		{
+			"code": "DATA-18",
+			"providerId": "Glo",
+			"title": "50MB - 1day",
+			"price": 50
+		},
+		{
+			"code": "DATA-21",
+			"providerId": "Glo",
+			"title": "150MB - 1day",
+			"price": 100
+		},
+		{
+			"code": "DATA-28",
+			"providerId": "Glo",
+			"title": "350MB - 2days",
+			"price": 200
+		},
+		{
+			"code": "DATA-27",
+			"providerId": "Glo",
+			"title": "1.35GB - 14days",
+			"price": 500
+		},
+		{
+			"code": "DATA-2",
+			"providerId": "Glo",
+			"title": "2.9GB - 30days",
+			"price": 1000
+		},
+		{
+			"code": "DATA-16",
+			"providerId": "Glo",
+			"title": "4.1GB - 30days",
+			"price": 1500
+		},
+		{
+			"code": "DATA-25",
+			"providerId": "Glo",
+			"title": "5.8GB - 30days",
+			"price": 2000
+		},
+		{
+			"code": "DATA-19",
+			"providerId": "Glo",
+			"title": "7.7GB - 30days",
+			"price": 2500
+		},
+		{
+			"code": "DATA-23",
+			"providerId": "Glo",
+			"title": "10GB - 30days",
+			"price": 3000
+		},
+		{
+			"code": "DATA-12",
+			"providerId": "Glo",
+			"title": "13.25GB - 30days",
+			"price": 4000
+		},
+		{
+			"code": "DATA-5",
+			"providerId": "Glo",
+			"title": "18.25GB - 30days",
+			"price": 5000
+		},
+		{
+			"code": "DATA-4",
+			"providerId": "Glo",
+			"title": "29.5GB - 30days",
+			"price": 8000
+		},
+		{
+			"code": "DATA-10",
+			"providerId": "Glo",
+			"title": "50GB - 30days",
+			"price": 10000
+		},
+		{
+			"code": "DATA-11",
+			"providerId": "Glo",
+			"title": "93GB - 30days",
+			"price": 15000
+		},
+		{
+			"code": "DATA-20",
+			"providerId": "Glo",
+			"title": "119GB - 30days",
+			"price": 18000
+		},
+		{
+			"code": "DATA-33",
+			"providerId": "Glo",
+			"title": "138GB - 30days",
+			"price": 20000
+		},
+		{
+			"code": "DATA-15",
+			"providerId": "Glo",
+			"title": "250MB - Night_1day",
+			"price": 25
+		},
+		{
+			"code": "DATA-30",
+			"providerId": "Glo",
+			"title": "500MB - Night_1day",
+			"price": 50
+		},
+		{
+			"code": "DATA-31",
+			"providerId": "Glo",
+			"title": "1GB - Night_5days",
+			"price": 100
+		},
+		{
+			"code": "DATA-24",
+			"providerId": "Glo",
+			"title": "7GB - Special_7days",
+			"price": 1500
+		},
+		{
+			"code": "DATA-37",
+			"providerId": "Glo",
+			"title": "1.25GB - Sunday_1day",
+			"price": 200
+		}
+	]
+}]
