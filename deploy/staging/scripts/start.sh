@@ -1,6 +1,6 @@
 #!/bin/bash
-source ~/.nvm/nvm.sh
 su ubuntu
+source ~/.nvm/nvm.sh
 cd /home/ubuntu/vas-vendor/
 npm run preinstall
 npm install 
