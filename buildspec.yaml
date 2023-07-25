@@ -14,7 +14,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Compiling the Node.js code
-      # - npm run build
+      - npm run build
       - cp -fr deploy/staging/appspec.yml deploy/staging/
   post_build:
     commands:
