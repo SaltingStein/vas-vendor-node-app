@@ -21,7 +21,7 @@ class RedisConnection extends BaseConnection<IHandyRedis, ClientOpts> {
 	public createConnection() {
 		let defaults: ClientOpts = {
 			prefix: `${App.NAME}:${App.ENV}:`,
-			db: 2,
+			db: RedisConfig.db,
 		};
 		if (this.options) {
 			defaults = { ...defaults, ...this.options };
@@ -38,7 +38,7 @@ const Redis = new RedisConnection({
 	host: RedisConfig.host,
 	port: RedisConfig.port,
 	// tls: RedisConfig.tls,
-	// password: RedisConfig.password,
+	password: RedisConfig.password,
 });
 type HashEntry = [string, string];
 type RedisAccessor = [string, (PREFIX | string)?];
