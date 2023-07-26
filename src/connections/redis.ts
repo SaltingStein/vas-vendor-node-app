@@ -3,6 +3,16 @@ import { createHandyClient, IHandyRedis } from "handy-redis";
 import { ClientOpts } from "redis";
 import { BaseConnection } from "./base";
 
+const connectionParameters = (env: string) => {
+	if (env === "development") {
+		return undefined;
+	} else {
+		return {
+			url: `redis://${RedisConfig.user}:${RedisConfig.password}@${RedisConfig.host}:${RedisConfig.port}`,
+		};
+	}
+};
+
 export enum PREFIX {
 	NULL = "",
 	OAUTH = "oauth",
@@ -21,7 +31,6 @@ class RedisConnection extends BaseConnection<IHandyRedis, ClientOpts> {
 	public createConnection() {
 		let defaults: ClientOpts = {
 			prefix: `${App.NAME}:${App.ENV}:`,
-			db: 2,
 		};
 		if (this.options) {
 			defaults = { ...defaults, ...this.options };
@@ -34,12 +43,9 @@ class RedisConnection extends BaseConnection<IHandyRedis, ClientOpts> {
 	}
 }
 
-const Redis = new RedisConnection({
-	host: RedisConfig.host,
-	port: RedisConfig.port,
-	// tls: RedisConfig.tls,
-	// password: RedisConfig.password,
-});
+
+
+const Redis = new RedisConnection(connectionParameters(App.ENV));
 type HashEntry = [string, string];
 type RedisAccessor = [string, (PREFIX | string)?];
 
