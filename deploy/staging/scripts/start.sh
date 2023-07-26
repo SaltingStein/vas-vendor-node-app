@@ -1,7 +1,8 @@
 #!/bin/bash
+cd /home/ubuntu/vas-vendor/
+sudo chown -R ubuntu:ubuntu . 
 su ubuntu
 source ~/.nvm/nvm.sh
-cd /home/ubuntu/vas-vendor/
 npm run preinstall
 npm install 
 npm run build
