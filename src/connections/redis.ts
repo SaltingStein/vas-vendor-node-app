@@ -43,9 +43,17 @@ class RedisConnection extends BaseConnection<IHandyRedis, ClientOpts> {
 	}
 }
 
+<<<<<<< Updated upstream
 
 
 const Redis = new RedisConnection(connectionParameters(App.ENV));
+=======
+const Redis = new RedisConnection({
+	host: RedisConfig.host,
+	port: RedisConfig.port,
+	password: RedisConfig.password,
+});
+>>>>>>> Stashed changes
 type HashEntry = [string, string];
 type RedisAccessor = [string, (PREFIX | string)?];
 

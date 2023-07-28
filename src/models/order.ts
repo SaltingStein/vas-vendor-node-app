@@ -53,6 +53,24 @@ export class OrderSource implements SessionSourceObject {
 	public sessionId!: string;
 }
 
+export class Commission {
+	@prop({ required: true })
+	@Field()
+	public vendAmount!: string;
+
+	@prop({ required: true })
+	@Field()
+	public commissionRate!: string;
+
+	@prop({ required: true })
+	@Field()
+	public commissionGained!: string;
+
+	@prop({ required: true })
+	@Field()
+	public discountedAmount!: string;
+}
+
 @ObjectType()
 export class ChangeHistory {
 	@prop({ required: true, default: null })
