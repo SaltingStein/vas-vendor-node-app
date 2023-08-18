@@ -12,7 +12,8 @@ import { CabletvProviders } from "@models/cabletvProviders";
 import { ElectricityProvider } from "@models/electricityProviders";
 import { DataBundleProviders } from "@models/dataBundleProviders";
 import { Offering } from "@models/offering";
-
+import { CashtokenBundles, BundleSchema } from "@models/cashtokenBundles";
+import WPCore from "@libs/WPCore";
 export interface IList<T = IListItem> {
 	[key: string]: T;
 }
@@ -24,13 +25,13 @@ export interface IListItem {
 }
 
 class ListSource {
-	[key: string]: (data?: any) => IList | Promise<IList> | Promise<IListItem[]> | any;
+	[key: string]: (data?: any, user?: any) => IList | Promise<IList> | Promise<IListItem[]> | any;
 
 	@singleArgAssert("provider_code")
 	@validate([node("provider_code").exists()])
 	@cache({
 		logger: Logger.info,
-		key: `${App.ENV}-databundles-{{provider_code}}`,
+		key: `databundles-{{provider_code}}`,
 	})
 	public async dataBundles(payload: any) {
 		const providers = (await this.dataProviders()) as object;
@@ -69,7 +70,7 @@ class ListSource {
 
 	@cache({
 		logger: Logger.info,
-		key: `${App.ENV}-airtimeProviders`,
+		key: `airtimeProviders`,
 	})
 	public async airtimeProviders() {
 		if (!App.PROD) {
@@ -89,7 +90,7 @@ class ListSource {
 	}
 	@cache({
 		logger: Logger.info,
-		key: `${App.ENV}-databundleProviders`,
+		key: `databundleProviders`,
 	})
 	public async dataProviders() {
 		if (!App.PROD) {
@@ -112,7 +113,7 @@ class ListSource {
 	@validate([node("provider_code").exists()])
 	@cache({
 		logger: Logger.info,
-		key: `${App.ENV}-cabletvBouquets-{{provider_code}}`,
+		key: `cabletvBouquets-{{provider_code}}`,
 	})
 	public async cabletvBouquets(payload: any) {
 		const providers = (await this.cableProviders()) as object;
@@ -153,7 +154,7 @@ class ListSource {
 
 	// @cache({
 	// 	logger: Logger.info,
-	// 	key: `${App.ENV}-cabletvProviders`,
+	// 	key: `cabletvProviders`,
 	// })
 	public async cableProviders() {
 		if (!App.PROD) {
@@ -222,6 +223,47 @@ class ListSource {
 			return formatOffering;
 		}
 		throw new ServiceUnavailableError("Unable to retrieve offering. Please try again");
+	}
+
+	@cache({
+		logger: Logger.info,
+		key: `cahtokenBundleProduct-{{product}}`,
+	})
+	public async cashtokenBundleProducts(payload: any) {
+		const bundles = await CashtokenBundles.fetchBundles({ product: payload.product });
+		if (Object.keys(bundles).length < 1) {
+			throw new BadRequestError("Invalid product provided");
+		}
+		return bundles;
+	}
+
+	@cache({
+		logger: Logger.info,
+		key: `cahtokenBundleProvider-{{provider_code}}`,
+	})
+	public async cashtokenBundleProviders(payload: any, user: any) {
+		const bundle = await CashtokenBundles.fetchBundles({ code: payload.provider_code });
+		if (Object.keys(bundle).length < 1) {
+			throw new BadRequestError("Invalid provider code provided");
+		}
+		const priceListings = await WPCore.getBundlePriceListing(user.token);
+		if (!priceListings.ok) {
+			throw new ServerError(priceListings.data.message);
+		}
+		let priceListing: any = {};
+		const data: any = priceListings.data;
+		for (const element in data) {
+			if (element.toLocaleLowerCase() === bundle[Object.keys(bundle)[0] as unknown as number].product.toLocaleLowerCase()) {
+				priceListing = data[element];
+				for (const price in priceListing) {
+					priceListing[price] = Object.assign(priceListing[price], { price });
+				}
+			}
+		}
+		if (Object.keys(priceListing).length < 1) {
+			throw new ServerError(priceListings.data.message);
+		}
+		return priceListing;
 	}
 }
 

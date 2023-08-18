@@ -2,7 +2,14 @@ import { RouteCollection, RouteLoader } from "@weaverkit/express";
 import { BearerAuth, authorize } from "../middlewares";
 import * as Api from "@components/api";
 import * as Validators from "@api/validators";
-import { ListController, VendController, OfferingController, SourceController, InfoController } from "@controllers";
+import {
+	ListController,
+	VendController,
+	OfferingController,
+	SourceController,
+	InfoController,
+	CashtokenBundleController,
+} from "@controllers";
 const { fromPath } = RouteLoader();
 
 export const routes: RouteCollection = {
@@ -19,19 +26,20 @@ export const routes: RouteCollection = {
 	offering: Api.load({
 		post: [["/", Validators.Offering, [], OfferingController.create]],
 	}),
+	cashtokenBundle: Api.load({
+		post: [["/", Validators.CashtokenBundle.create, [], CashtokenBundleController.create]],
+	}),
 	source: Api.load({
 		post: [["/", Validators.Source, [], SourceController.create]],
 	}),
 };
 
 export const RestAuth = BearerAuth({
-	// strategy: (token, ctx) => {
-	// 	return { authorized: true };
-	// },
 	strategy: authorize,
 	excludedPaths: {
 		all: [/^\/docs(\/?)/],
 		// get: [/^\/list(\/?)/, /^\/info(\/?)/],
-		post: [/^\/vend(\/?)/, /^\/offering(\/?)/, /^\/source(\/?)/],
+		get: [/^\/info(\/?)/],
+		post: [/^\/offering(\/?)/, /^\/source(\/?)/, /^\/cashtokenBundle(\/?)/],
 	},
 });

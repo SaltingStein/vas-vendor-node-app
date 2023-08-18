@@ -8,9 +8,7 @@ class Wallet {
 		try {
 			const result = (await sequelize.ActiveConnection).transaction(async (t: any) => {
 				const debitResult = await this.debitWallet(srcUserId, amount, t);
-				console.log("DEBIT RESULT IS HERE", debitResult);
 				const creditResult = await this.creditWallet(dstUserId, amount, t);
-				console.log("CREDIT RESULT IS HERE", creditResult);
 				await WalletTransaction.create({
 					refId: tranRef,
 					type: type,

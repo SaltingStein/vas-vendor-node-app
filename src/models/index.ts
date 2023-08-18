@@ -8,5 +8,6 @@ export * from "@models/payment";
 export * from "@models/user";
 export * from "@models/helper";
 export * from "@models/meterNumbers";
+export * from "@models/cashtokenBundles";
 export { DocumentType, ReturnModelType } from "@typegoose/typegoose";
 export { forcePopulation, isObjectId, isOf } from "@models/helper";

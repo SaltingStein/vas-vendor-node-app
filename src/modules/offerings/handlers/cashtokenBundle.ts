@@ -12,6 +12,7 @@ class Airtime extends PaidOfferingHandler {
 	private vendor!: AirtimeProvider;
 
 	public async value() {
+		console.log("VENDOR IS HERE", this.vendor, this.params);
 		const result = (await this.vendor.vendAirtime({
 			amount: this.params.amount,
 			recipient: this.params.providerId,
@@ -57,9 +58,9 @@ class Airtime extends PaidOfferingHandler {
 				.isNumeric()
 				.withMessage("Amount should be numeric")
 				.customValidator((value) => {
-					return Number(value) >= 100 && Number(value) <= 100000;
+					return Number(value) >= 50 && Number(value) <= 100000;
 				})
-				.withMessage("Amount should be between the range N100 to N100,000 inclusive"),
+				.withMessage("Amount should be between the range N50 to N100,000 inclusive"),
 			node("productType")
 				.exists()
 				.isIn(Object.values(AirtimeNetworks))

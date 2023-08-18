@@ -6,6 +6,10 @@ export interface AirtimeProvider {
 	vendAirtime(data: FelaInterface.VendAirtimeRequestData): Promise<FelaInterface.ErrorResponse | FelaInterface.VendAirtimeResponse>;
 }
 
+export interface CashtokenBundleProvider {
+	vendCashtokenBundle(data: any): any;
+}
+
 export interface DataProvider {
 	getDatabundles(providerId: string): Promise<FelaInterface.FetchDatabundleResponse | FelaInterface.ErrorResponse>;
 	vendDatabundle(

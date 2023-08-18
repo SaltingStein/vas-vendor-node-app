@@ -42,7 +42,6 @@ export class BaseOfferingHandler<T extends FulfillmentRequestData> {
 		try {
 			await this.validate();
 			const artifact = await this.value();
-			console.log("ARTIFACT IS RETURNED", artifact, this.getDescription());
 			artifact.setAsActivity({
 				key: `offering:${this.offering.name}:fulfil`,
 				description: this.getDescription(),

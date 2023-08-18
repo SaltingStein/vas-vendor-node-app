@@ -8,6 +8,7 @@ import { composePaginatedModel, filterable, sortable } from "./helper";
 import { IOffering } from "./offering";
 import { IPayment } from "./payment";
 import { IUser } from "./user";
+import { RefactoredSchema } from "@controllers/vend";
 
 export enum OrderStatus {
 	COMPLETED = "completed",
@@ -68,7 +69,27 @@ export class Commission {
 
 	@prop({ required: true })
 	@Field()
-	public discountedAmount!: string;
+	public vasAmount!: string;
+
+	@prop({ default: "0" })
+	@Field()
+	public rewardRate!: string;
+
+	@prop({ default: "0" })
+	@Field()
+	public rewardAmount!: string;
+
+	@prop({ default: "0" })
+	@Field()
+	public referralAmount!: string;
+
+	@prop({ default: "0" })
+	@Field()
+	public referralRate!: string;
+
+	@prop({ default: "0" })
+	@Field()
+	public rewardThreshold!: string;
 }
 
 @ObjectType()
@@ -137,7 +158,7 @@ export class IOrder extends MyGoose {
 	public lastError!: Schema.Types.Mixed;
 
 	@prop({ required: true })
-	public commissions!: Schema.Types.Mixed;
+	public commissions!: RefactoredSchema;
 
 	@prop({
 		required: true,

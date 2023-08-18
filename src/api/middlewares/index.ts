@@ -49,19 +49,37 @@ const excluded = (rq: express.Request, list: ExcludedPath) => {
 export const authorize = async (token: string, ctx: any): Promise<AuthStrategyResponse> => {
 	try {
 		const response: any = await jwt.verify(token, App.JWT_SECRET);
-		console.log("RESPONSE", response);
 		if (response) {
 			const {
 				data: { user },
 			} = response;
-			const cached = await Redis.ActiveConnection.get(`${App.ENV}:${user.user_msisdn}`);
-		} else {
+			const cached = await Redis.ActiveConnection.get(`${user.user_msisdn}`);
+			if (cached) {
+				const parsedData = JSON.parse(cached);
+				Object.assign(parsedData, { token });
+				ctx.user = parsedData;
+				return { authorized: true };
+			} else {
+				const { ok, data } = await WPCore.getProfile({ authToken: token, user: user });
+				// console.log("DATA IS HERE", data);
+				if (!ok && "message" in data) {
+					return { authorized: false, message: data.message, code: 500 };
+				} else {
+					// if ("is_banned" in data && (!data["is_banned"] || data["is_banned"] === "2")) {
+					// 	return { authorized: false, message: "Unauthorized", code: 500 };
+					// }
+					await Redis.ActiveConnection.set(`${user.user_msisdn}`, JSON.stringify(data));
+					Object.assign(data, { token });
+					ctx.user = data;
+					return { authorized: true };
+				}
+			}
 		}
 		return { authorized: false, message: "Invalid authorization token provided", code: 401 };
 	} catch (error: any) {
 		console.log("AUTHENTICATION ERROR", error);
 		if (error.message === "jwt expired") {
-			return { authorized: false, message: "Authorization failed,  Access token is expired", code: 403 };
+			return { authorized: false, message: "Authorization failed, Access token is expired", code: 401 };
 		}
 		return { authorized: false, message: "Unable to authenticate provided token", code: 401 };
 	}
@@ -74,7 +92,7 @@ export const BearerAuth = ({ headerKey = "Bearer", excludedPaths = [], strategy 
 				return next();
 			}
 			if (!req.headers.authorization) {
-				throw new UnauthorizedError("Missing Authorization Key").setCode("MISSING_AUTHORIZATION");
+				throw new UnauthorizedError("Unauthorized").setCode("MISSING_AUTHORIZATION");
 			}
 			const parts = (req.headers.authorization as string).split(" ");
 			if (parts.length !== 2 || parts[0] !== headerKey) {
@@ -86,7 +104,7 @@ export const BearerAuth = ({ headerKey = "Bearer", excludedPaths = [], strategy 
 				if (state.authorized === true) {
 					return next();
 				}
-				throw new UnauthorizedError().setInfo(state);
+				throw new UnauthorizedError(state.message);
 			} catch (error: any) {
 				if (error instanceof AppError) {
 					throw error;

@@ -101,4 +101,37 @@ export const Vend = {
 	service: [...Params(), ...VendSource()],
 };
 
+export const CashtokenBundle = {
+	create: [
+		body("code")
+			.custom((value) => {
+				if (!value) {
+					return false;
+				} else {
+					return true;
+				}
+			})
+			.withMessage("code is required"),
+		body("productType")
+			.custom((value) => {
+				if (!value) {
+					return false;
+				} else {
+					return true;
+				}
+			})
+			.withMessage("productType is required"),
+		body("productName")
+			.custom((value) => {
+				if (!value) {
+					return false;
+				} else {
+					return true;
+				}
+			})
+			.withMessage("productName is required"),
+	],
+	fetchProviders: [param("service").exists(), query("*")],
+};
+
 export const NONE = [check("*").optional()];
