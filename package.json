@@ -4,7 +4,7 @@
 		"description": "Vas vendor APIs",
 		"main": "application/index.js",
 		"scripts": {
-				"start": "npm run build && npm run link && cross-env NODE_ENV=development node application/server.js",
+				"start": "npm run build && npm run link && cross-env NODE_ENV=staging node application/server.js",
 				"start:staging": "npm run build && cross-env NODE_ENV=staging node application/server.js",
 				"test": "jest",
 				"test:watch": "jest --watch",

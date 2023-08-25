@@ -1,4 +1,5 @@
 import { App, Redis as RedisConfig } from "@config";
+console.log("REDIS CONFIGURATION IS HERE", RedisConfig);
 import { createHandyClient, IHandyRedis } from "handy-redis";
 import { ClientOpts } from "redis";
 import { BaseConnection } from "./base";
@@ -31,6 +32,7 @@ class RedisConnection extends BaseConnection<IHandyRedis, ClientOpts> {
 	public createConnection() {
 		let defaults: ClientOpts = {
 			prefix: `${App.NAME}:${App.ENV}:`,
+			db: RedisConfig.db,
 		};
 		if (this.options) {
 			defaults = { ...defaults, ...this.options };

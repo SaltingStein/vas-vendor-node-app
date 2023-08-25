@@ -3,7 +3,7 @@ os: linux
 files:
   - source: /
     destination: /home/ubuntu/vas-vendor
-    file_exists_behavior: OVERWRITE
+file_exists_behavior: OVERWRITE
 hooks:
   # BeforeInstall:
   #   - location: scripts/beforeInstall.sh

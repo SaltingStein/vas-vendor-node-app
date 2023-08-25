@@ -57,6 +57,7 @@ const Config = Object.freeze({
 		port: Number(process.env.REDIS_PORT) || 6379,
 		password: process.env.REDIS_PASSWORD || "",
 		user: process.env.REDIS_USER,
+		db: process.env.REDIS_DB || 2,
 		// tls: process.env.REDIS_TLS,
 	},
 	MySQL: {
