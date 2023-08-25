@@ -11,7 +11,7 @@ class WPCore implements Interface.UserProfile {
 		try {
 			const payload = {
 				action: Enum.Actions.PROFILE,
-				agentId: requestData.user.user_msisdn,
+				agentId: requestData.user.user_id,
 			};
 			const wpHeader = { Authorization: `Bearer ${requestData.authToken}` };
 			const { data } = await axios.post(`${WPCoreConfig.url}/agent-discount`, payload, {

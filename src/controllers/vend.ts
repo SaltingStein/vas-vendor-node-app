@@ -51,16 +51,13 @@ function merchantCanVendService(user: Interface.Data, offering: string, productT
 				serviceCommission
 					? Object.assign(serviceCommission, { rewardThreshold: merchantAvailableServices[productType]["rewardthreshold"] })
 					: { rewardThreshold: merchantAvailableServices[productType]["rewardthreshold"] || "0" };
-			case "referrar":
+			case "referrer":
 				serviceCommission
-					? Object.assign(serviceCommission, { referralRate: merchantAvailableServices[productType]["referrar"] })
-					: { referralRate: merchantAvailableServices[productType]["referrar"] || "0" };
+					? Object.assign(serviceCommission, { referralRate: merchantAvailableServices[productType]["referrer"] })
+					: { referralRate: merchantAvailableServices[productType]["referrer"] || "0" };
 		}
 	}
 
-	// if (productType === "cashtokenBundle") {
-
-	// }
 	return serviceCommission as RefactoredSchema;
 }
 
@@ -71,6 +68,7 @@ export async function fulfill(data: FulfillmentRequestData, user: Interface.Data
 		const Handler = await getHandler(service);
 		// Retrieve merchant commission configuration
 		const commissions: RefactoredSchema = merchantCanVendService(user, service.name, data.params.productType.toLowerCase());
+		console.log("COMMISSIONS", commissions);
 		const handler = new Handler(data);
 		const { source, params } = handler.data;
 		const txnRef = source.sessionId;
@@ -158,6 +156,7 @@ async function getOrderAmount(productName: string, data: FulfillmentRequestData,
 			} else {
 				throw new Error("Unable to retrieve bouquets. Please try again");
 			}
+		// case "utilityBundle":
 	}
 }
 

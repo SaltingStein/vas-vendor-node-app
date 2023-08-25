@@ -26,8 +26,8 @@ export interface GetUserProfileRequestData {
 }
 
 export interface Data {
-	id: string;
-	msisdn: string;
+	id?: string;
+	msisdn?: string;
 	wallet_balance: string;
 	commissions: {
 		[x: string]: {
@@ -35,7 +35,7 @@ export interface Data {
 				discount: string;
 				custormerreward: string;
 				rewardthreshold: string;
-				referrar: string;
+				referrer: string;
 			};
 		};
 	};

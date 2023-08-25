@@ -152,10 +152,10 @@ class ListSource {
 		}
 	}
 
-	// @cache({
-	// 	logger: Logger.info,
-	// 	key: `cabletvProviders`,
-	// })
+	@cache({
+		logger: Logger.info,
+		key: `cabletvProviders`,
+	})
 	public async cableProviders() {
 		if (!App.PROD) {
 			const response = (await CabletvProviders.find({}, { _id: 0 })) as unknown as object[];

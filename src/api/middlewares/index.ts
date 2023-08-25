@@ -50,25 +50,22 @@ export const authorize = async (token: string, ctx: any): Promise<AuthStrategyRe
 	try {
 		const response: any = await jwt.verify(token, App.JWT_SECRET);
 		if (response) {
-			const {
-				data: { user },
-			} = response;
-			const cached = await Redis.ActiveConnection.get(`${user.user_msisdn}`);
+			const cached = await Redis.ActiveConnection.get(`${response.user_msisdn}`);
 			if (cached) {
 				const parsedData = JSON.parse(cached);
 				Object.assign(parsedData, { token });
 				ctx.user = parsedData;
 				return { authorized: true };
 			} else {
-				const { ok, data } = await WPCore.getProfile({ authToken: token, user: user });
-				// console.log("DATA IS HERE", data);
+				const { ok, data } = await WPCore.getProfile({ authToken: token, user: response });
 				if (!ok && "message" in data) {
 					return { authorized: false, message: data.message, code: 500 };
 				} else {
-					// if ("is_banned" in data && (!data["is_banned"] || data["is_banned"] === "2")) {
-					// 	return { authorized: false, message: "Unauthorized", code: 500 };
-					// }
-					await Redis.ActiveConnection.set(`${user.user_msisdn}`, JSON.stringify(data));
+					if ("is_banned" in data && data["is_banned"] !== "1") {
+						return { authorized: false, message: "Unauthorized", code: 500 };
+					}
+					Object.assign(data, { id: response.user_id, msisdn: response.msisdn });
+					await Redis.ActiveConnection.set(`${response.user_msisdn}`, JSON.stringify(data));
 					Object.assign(data, { token });
 					ctx.user = data;
 					return { authorized: true };

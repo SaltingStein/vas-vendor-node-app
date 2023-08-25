@@ -9,6 +9,7 @@ import {
 	SourceController,
 	InfoController,
 	CashtokenBundleController,
+	CallbackController,
 } from "@controllers";
 const { fromPath } = RouteLoader();
 
@@ -32,6 +33,9 @@ export const routes: RouteCollection = {
 	source: Api.load({
 		post: [["/", Validators.Source, [], SourceController.create]],
 	}),
+	callback: Api.load({
+		post: [["/:name", [], [], null]],
+	}),
 };
 
 export const RestAuth = BearerAuth({
@@ -39,7 +43,7 @@ export const RestAuth = BearerAuth({
 	excludedPaths: {
 		all: [/^\/docs(\/?)/],
 		// get: [/^\/list(\/?)/, /^\/info(\/?)/],
-		get: [/^\/info(\/?)/],
+		// get: [/^\/info(\/?)/],
 		post: [/^\/offering(\/?)/, /^\/source(\/?)/, /^\/cashtokenBundle(\/?)/],
 	},
 });

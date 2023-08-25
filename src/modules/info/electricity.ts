@@ -19,23 +19,23 @@ class Electricty {
 		const vendor = (await ElectricityFacade.electrcityVendor(productType)) as unknown as ElectricityProvider & Services;
 
 		if (vendor) {
-			if (!App.PROD) {
-				const response = (await MeterNumbers.findOne(
-					{ disco: productType, meterNumber: providerId, accountType: providerCode },
-					{ details: 1 },
-				)) as unknown as {
-					details: object[];
-				};
-				if (response) {
-					return new Artifact({ ...response.details }, "Account resolved successfully");
-				} else {
-					throw new NotFoundError(`Customer not found with account or meter number ${providerId}`).setData({
-						productType,
-						providerCode,
-						providerId,
-					});
-				}
-			}
+			// if (!App.PROD) {
+			// 	const response = (await MeterNumbers.findOne(
+			// 		{ disco: productType, meterNumber: providerId, accountType: providerCode },
+			// 		{ details: 1 },
+			// 	)) as unknown as {
+			// 		details: object[];
+			// 	};
+			// 	if (response) {
+			// 		return new Artifact({ ...response.details }, "Account resolved successfully");
+			// 	} else {
+			// 		throw new NotFoundError(`Customer not found with account or meter number ${providerId}`).setData({
+			// 			productType,
+			// 			providerCode,
+			// 			providerId,
+			// 		});
+			// 	}
+			// }
 			const { data } = await vendor.verifyMeter({
 				disco: productType,
 				meterNumber: providerId,

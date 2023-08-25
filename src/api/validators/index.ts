@@ -22,7 +22,7 @@ export const Params = (productNames = PRODUCTS) => [
 			}
 		})
 		.withMessage(`Unknown product name`),
-	body("params.productType").exists().withMessage("params.productType is required").toUpperCase(),
+	body("params.productType").exists().withMessage("params.productType is required"),
 	body("params.productCode").optional(),
 	body("params.providerId").exists().withMessage("params.providerId is required"),
 	// body("params.amount").exists().withMessage("params.amount is required"),

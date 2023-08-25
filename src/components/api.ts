@@ -97,7 +97,6 @@ export const defaultRequestHandler = (controllerFn: any, options: Partial<Valida
 	const handler = async (req: express.Request, res: express.Response) => {
 		try {
 			const data = validateRequest(req, { ...defaultOptions, ...options });
-			console.log("VALIDATION DATA", data);
 			const result = await controllerFn(data, (req as any).user);
 			if (result instanceof Artifact) {
 				const response = new ApiResponse(result.data, result.message || "Request successful");

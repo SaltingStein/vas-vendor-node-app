@@ -27,6 +27,5 @@ export const airtimeVendor = async (productType: AirtimeNetworks): Promise<Airti
 			break;
 		}
 	}
-	console.log("PROVISIONED PROVIDER", provisionedVendor);
 	return provisionedVendor;
 };
