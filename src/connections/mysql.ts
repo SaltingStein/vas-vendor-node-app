@@ -16,7 +16,7 @@ class MySQLConnection {
 		this.ActiveConnection = this.createConnection();
 	}
 	public async createConnection() {
-		const connection = new Sequelize(`mysql://${MySQL.username}:${MySQL.password}@localhost:${MySQL.port}/${MySQL.database}`, {
+		const connection = new Sequelize(`mysql://${MySQL.username}:${MySQL.password}@${MySQL.host}:${MySQL.port}/${MySQL.database}`, {
 			models: [WP_USERMETA],
 		});
 
