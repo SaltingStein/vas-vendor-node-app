@@ -20,7 +20,7 @@ class WPCore implements Interface.UserProfile {
 			if (data.code === 200) {
 				return {
 					ok: true,
-					data: Object.assign(data.body, { id: requestData.user.id }),
+					data: Object.assign(data.body, { id: requestData.user.user_id }),
 				};
 			} else {
 				return {
