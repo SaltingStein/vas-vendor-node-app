@@ -1,3 +1,4 @@
+import { MySQL } from "@config";
 import { ValidationError, AppError, ServiceUnavailableError, BadRequestError } from "@components/errors";
 import { Offering, IOffering, DocumentType, Order, OrderStatus, Payment, PaymentStatus } from "@models";
 import { findOfferingHandler, FulfillmentRequestData, PaidOfferingHandler } from "../modules/offerings";
@@ -80,7 +81,7 @@ export async function fulfill(data: FulfillmentRequestData, user: Interface.Data
 		const amount = await getOrderAmount(params.productName, handler.data, params?.productType || null);
 		const commissionCalculated: RefactoredSchema = calculateCommission(amount, commissions["discount"] as string);
 		console.log("COMMISSION CALCULATED", commissionCalculated);
-		await Ewallet.transfer(user.id, 1, Number.parseFloat(amount), txnRef, TransactionTypes.DEBIT);
+		await Ewallet.transfer(user.id, MySQL.systemUser, Number.parseFloat(amount), txnRef, TransactionTypes.DEBIT);
 		// throw new Error("ERROR OCCURRED");
 		// return "I am done";
 		const { doc: payment } = await Payment.findOrCreate(
