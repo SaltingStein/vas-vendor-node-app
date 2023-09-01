@@ -52,7 +52,6 @@ export interface VendAirtimeResponse extends Response {
 		recipient: string;
 		network: string;
 		date: string;
-		transactionReference: string;
 	};
 }
 export interface VendElectricityResponse extends Response {
@@ -66,7 +65,6 @@ export interface VendElectricityResponse extends Response {
 		tariff: string;
 		additionalToken: string;
 		accountType: string;
-		transactionReference: string;
 	};
 }
 
@@ -156,7 +154,6 @@ export interface VendDatabundleResponse extends Response {
 		recipient: string;
 		network: string;
 		date: string;
-		transactionReference: string;
 	};
 }
 

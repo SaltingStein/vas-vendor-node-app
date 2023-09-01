@@ -1,16 +1,18 @@
 import { AirtimeProvider, DataProvider } from "@components/interfaces";
 import { AirtimeNetworks, DataNetworks } from "@components/enums";
 
-export enum Vendors {
-	FELA = "fela",
-}
+export const vendors: {
+	[T: string]: string;
+} = {
+	FELA: "fela",
+};
 
 export const dataBundleVendor = async (productType: DataNetworks): Promise<DataProvider> => {
 	let provisionedVendor!: DataProvider;
-	for (const vendor in Vendors) {
-		const path = `@libs/${vendor}`;
-		const provider = (await import(path))[vendor];
-		if (provider.services["dataBundle"] && provider.services["services"]["dataBundle"].includes(productType.toLowerCase())) {
+	for (const vendor in vendors) {
+		const path = `@libs/${vendors[vendor]}`;
+		const provider = (await import(path)).default;
+		if (provider.services["services"]["dataBundle"] && provider.services["services"]["dataBundle"].includes(productType)) {
 			provisionedVendor = provider;
 		}
 	}
@@ -19,8 +21,8 @@ export const dataBundleVendor = async (productType: DataNetworks): Promise<DataP
 
 export const airtimeVendor = async (productType: AirtimeNetworks): Promise<AirtimeProvider> => {
 	let provisionedVendor!: AirtimeProvider;
-	for (const vendor in Vendors) {
-		const path = `@libs/${vendor}`;
+	for (const vendor in vendors) {
+		const path = `@libs/${vendors[vendor]}`;
 		const provider = (await import(path)).default;
 		if (provider.services["services"]["airtime"] && provider.services["services"]["airtime"].includes(productType)) {
 			provisionedVendor = provider;

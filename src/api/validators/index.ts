@@ -1,10 +1,8 @@
-import { sanitizePhoneNumber, verifyPhoneNumber } from "@libs/utils";
+import { sanitizePhoneNumber } from "@libs/utils";
 import { body, check, param, query } from "express-validator/check";
-enum Sources {
-	"AGENCY" = "agency",
-}
+import { App } from "@config";
 export const SOURCES = ["agency"];
-export const PRODUCTS = ["airtime", "electricity", "cableTv", "dataBundle"];
+export const PRODUCTS = ["airtime", "electricity", "cabletv", "databundle"];
 export const Params = (productNames = PRODUCTS) => [
 	body("params")
 		.exists()
@@ -51,22 +49,9 @@ export const VendSource = (source = SOURCES) => [
 			}
 		})
 		.withMessage("source.sessionId is required"),
-	body("source.sourceId")
-		.custom((value) => {
-			if (!value) {
-				return false;
-			} else {
-				return true;
-			}
-		})
-		.withMessage("source.sourceId is required")
-		.custom((value: string) => {
-			return verifyPhoneNumber(value);
-		})
-		.withMessage("source.sourceId is not a valid nigerian phone number")
-		.customSanitizer((value: string) => {
-			return sanitizePhoneNumber(value);
-		}),
+	body("source.sourceId").customSanitizer(() => {
+		return App.ADMIN_MISDN;
+	}),
 	body("source.source")
 		.custom((value) => {
 			if (!value) {
@@ -80,14 +65,10 @@ export const VendSource = (source = SOURCES) => [
 			return value.toLowerCase();
 		})
 		.trim()
-		.custom(async (value, { req, location, path }) => {
+		.custom(async (value) => {
 			if (!source.includes(value)) {
 				return Promise.reject(false);
 			}
-			// if (value === Sources.AGENCY) {
-			// 	const { user } = req;
-			// 	// search merchant profile using source ID
-			// }
 			return Promise.resolve(true);
 		})
 		.withMessage(`Unknown source`),

@@ -35,6 +35,7 @@ const Config = Object.freeze({
 		LOG_TO_FILE: !!Number(getEnv<string>("ADD_FILE_LOGGING", "0")),
 		BASE_URL: getEnv<string>("BASE_URL", "http://127.0.0.1:4600/"),
 		JWT_SECRET: getEnv<string>("JWT_SECRET"),
+		ADMIN_MISDN: getEnv<string>("ADMIN_MISDN", "2348137107881"),
 	},
 	Fela: {
 		sourceName: getEnv<string>("FELA_SOURCE"),

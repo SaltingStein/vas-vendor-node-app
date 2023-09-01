@@ -77,7 +77,6 @@ export class PaidOfferingHandler extends BaseOfferingHandler<FulfillmentRequestD
 
 			return await this.fulfil();
 		} catch (error) {
-			console.log("I ALSO GOT HERE", error);
 			throw error;
 		}
 	}

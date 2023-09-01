@@ -65,7 +65,7 @@ export const authorize = async (token: string, ctx: any): Promise<AuthStrategyRe
 						return { authorized: false, message: "Unauthorized", code: 500 };
 					}
 					Object.assign(data, { id: response.user_id, msisdn: response.msisdn });
-					await Redis.ActiveConnection.set(`${response.user_msisdn}`, JSON.stringify(data));
+					await Redis.ActiveConnection.set(`${response.user_id}`, JSON.stringify(data));
 					Object.assign(data, { token });
 					ctx.user = data;
 					return { authorized: true };

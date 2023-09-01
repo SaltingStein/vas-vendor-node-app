@@ -25,12 +25,11 @@ async function getHandler(offering: DocumentType<IOffering>) {
 	return Handler;
 }
 
-// async function calculateUtilityBundle(amount, service) {
-
-// }
-
 function merchantCanVendService(user: Interface.Data, offering: string, productType: string) {
+	console.log("USER IS HERE O", user);
 	const { commissions } = user;
+	console.log("Commission IS HERE O", commissions);
+	console.log("Offering IS HERE O", offering, productType);
 	const merchantAvailableServices = commissions[offering];
 	if (!merchantAvailableServices || !merchantAvailableServices[productType]) {
 		throw new BadRequestError(`You do not have authorization to vend the provided service(${productType})`);
@@ -79,11 +78,10 @@ export async function fulfill(data: FulfillmentRequestData, user: Interface.Data
 			throw new ValidationError("Transaction reference already exists");
 		}
 		const amount = await getOrderAmount(params.productName, handler.data, params?.productType || null);
+		console.log("ORDER AMOUNT IS HERE", amount);
 		const commissionCalculated: RefactoredSchema = calculateCommission(amount, commissions["discount"] as string);
 		console.log("COMMISSION CALCULATED", commissionCalculated);
 		await Ewallet.transfer(user.id, MySQL.systemUser, Number.parseFloat(amount), txnRef, TransactionTypes.DEBIT);
-		// throw new Error("ERROR OCCURRED");
-		// return "I am done";
 		const { doc: payment } = await Payment.findOrCreate(
 			{ txnRef },
 			{
@@ -117,7 +115,7 @@ export async function fulfill(data: FulfillmentRequestData, user: Interface.Data
 		if (error instanceof AppError) {
 			throw error;
 		} else {
-			throw new ServiceUnavailableError("Order fulfillment", error);
+			throw new ServiceUnavailableError("Unable to complete request", error);
 		}
 	}
 }
@@ -140,10 +138,12 @@ async function getOrderAmount(productName: string, data: FulfillmentRequestData,
 			};
 			if (dataBundles[data.params.providerCode]) {
 				return dataBundles[data.params.providerCode]["price"];
+			} else if (Object.keys(dataBundles).length > 0) {
+				throw new BadRequestError("Invalid provider code provided");
 			} else {
 				throw new Error("Unable to retrieve databundle. Please try again");
 			}
-		case "cableTv":
+		case "cabletv":
 			const bouquets = (await listSources.cabletvBouquets({ provider_code: productType })) as {
 				[x: string]: {
 					code: string;
@@ -154,8 +154,10 @@ async function getOrderAmount(productName: string, data: FulfillmentRequestData,
 			};
 			if (bouquets[data.params.providerCode]) {
 				return bouquets[data.params.providerCode]["price"];
+			} else if (Object.keys(bouquets).length > 0) {
+				throw new BadRequestError("Invalid provider code provided");
 			} else {
-				throw new Error("Unable to retrieve bouquets. Please try again");
+				throw new ServiceUnavailableError("Unable to retrieve bouquets. Please try again");
 			}
 		// case "utilityBundle":
 	}

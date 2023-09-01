@@ -1,5 +1,5 @@
 import { NotFoundError } from "@components/errors";
-import { electricity } from "../modules/info";
+import { infoSources } from "@modules/info";
 import { App } from "@config";
 
 interface IQuery {
@@ -8,9 +8,10 @@ interface IQuery {
 }
 
 export const fetch = async ({ name, ...filters }: IQuery) => {
-	if (!electricity[name as keyof typeof electricity]) {
+	if (!infoSources[name as keyof typeof infoSources]) {
 		App.ErrorHandler.handle(new NotFoundError(`Info ${name} does not exist`));
 		throw new NotFoundError(`Resource not found`);
 	}
-	return electricity[name as keyof typeof electricity](filters);
+	const result = await infoSources[name as keyof typeof infoSources](filters);
+	return result;
 };

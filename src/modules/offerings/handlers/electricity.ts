@@ -20,6 +20,7 @@ class Electricity extends PaidOfferingHandler {
 			transactionRef: this.params.transactionReference,
 		})) as any;
 		const { data, ok } = result;
+		data.transactionReference = this.source.sessionId;
 		if (ok) {
 			return new Artifact(data, "Fulfillment Successful");
 		}

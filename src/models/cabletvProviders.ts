@@ -11,6 +11,10 @@ export class ICabletvProviders extends MyGoose {
 
 	@prop({ required: true })
 	@Field()
+	public providerCode!: string;
+
+	@prop({ required: true })
+	@Field()
 	public title!: string;
 }
 

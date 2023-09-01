@@ -63,7 +63,6 @@ export interface VendElectricityResponse extends Response {
 		units: string;
 		tariff: string;
 		accountType: string;
-		transactionReference: string;
 	} & detailsProperties;
 }
 

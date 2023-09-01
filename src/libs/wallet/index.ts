@@ -125,22 +125,31 @@ class Wallet {
 
 	public async reverseDebit(tranRef: string): Promise<void> {
 		try {
-			const transaction = await WalletTransaction.findOne({
+			const transactions = await WalletTransaction.find({
 				refId: tranRef,
 			});
 
-			if (!transaction) {
+			if (transactions.length < 1) {
 				console.log(`WALLET REVERSAL RESPONSE:Transaction ${tranRef} not found`);
 				return;
 			}
 
-			await this.transfer(
-				transaction.dstUserId,
-				transaction.srcUserId,
-				transaction.amount,
-				transaction.refId,
-				TransactionTypes.REVERSAL,
-			);
+			if (transactions.length > 1) {
+				return;
+			} else {
+				for (const transaction of transactions) {
+					if (transaction.type === "debit") {
+						await this.transfer(
+							transaction.dstUserId,
+							transaction.srcUserId,
+							transaction.amount,
+							transaction.refId,
+							TransactionTypes.REVERSAL,
+						);
+					}
+				}
+				return;
+			}
 		} catch (error) {
 			console.log("Reversal:Error:", error);
 			throw error;

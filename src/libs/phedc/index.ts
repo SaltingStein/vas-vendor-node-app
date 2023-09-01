@@ -171,7 +171,6 @@ class Phedc implements Partial<ElectricityProvider> {
 						units: data[0].UNITSACTUAL,
 						tariff: data[0].TARIFF,
 						accountType: requestData.accountTypes,
-						transactionReference: requestData.transactionRef,
 						...details,
 						"Arrears (NGN)": "",
 						"Energy Value (NGN)": "",

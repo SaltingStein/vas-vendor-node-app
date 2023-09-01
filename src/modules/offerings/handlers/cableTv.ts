@@ -21,6 +21,7 @@ class CableTv extends PaidOfferingHandler {
 			providerCode: this.params.productType,
 		})) as any;
 		const { data, ok } = result;
+		data.transactionReference = this.source.sessionId;
 		if (ok) {
 			return new Artifact(data, "Fulfillment Successful");
 		}
@@ -39,7 +40,7 @@ class CableTv extends PaidOfferingHandler {
 	}
 
 	public getDescription() {
-		return `${this.params.providerName} | ${this.params.service.title || ""} cable subscription for ${this.params.providerId}`;
+		return `${this.params.productType} cable subscription for ${this.params.providerId}`;
 	}
 
 	public async beforePayment() {
@@ -52,29 +53,40 @@ class CableTv extends PaidOfferingHandler {
 
 	public async validator() {
 		return [
-			node("productType")
-				.exists()
-				.isIn(Object.keys((await listSources.cableProviders()) as object))
-				.withMessage(`productType should be any of ${Object.keys((await listSources.cableProviders()) as object)}`),
 			node("providerCode")
 				.exists()
 				.customValidator(async (value) => {
 					const { productType } = this.params;
-					const { ok, data } = (await Fela.fetchBouquets(productType)) as any;
-					let response: boolean;
-					if (!ok) {
-						response = false;
+					const bouquets = (await listSources.cabletvBouquets({ provider_code: productType })) as {
+						[x: string]: {
+							code: string;
+							title: string;
+							price: number;
+							slug: string;
+						};
+					};
+					if (bouquets[value]) {
+						return true;
 					} else {
-						if (Object.keys(data).includes(value) && data[value]) {
-							this.params.amount = data[value].price;
-							response = true;
-						} else {
-							response = false;
-						}
+						return false;
 					}
-					return response;
 				})
 				.withMessage(`Unable to process request.Please check bouquet(${this.params.providerCode}) and try again`),
+			node("productType")
+				.exists()
+				.isIn(Object.keys((await listSources.cableProviders()) as object))
+				.withMessage(`productType should be any of ${Object.keys((await listSources.cableProviders()) as object)}`)
+				.customValidator(async (value) => {
+					const providers = (await listSources.cableProviders()) as {
+						[T: string]: {
+							code: string;
+							title: string;
+							providerId: string;
+						};
+					};
+					this.params.productType = providers[value].providerId;
+					return true;
+				}),
 			node("providerId")
 				.exists()
 				.customValidator(async (value) => {

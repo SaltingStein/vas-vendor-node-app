@@ -12,8 +12,8 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 		services: {
 			airtime: ["MTN", "Airtel", "Glo", "Etisalat"],
 			electricity: ["AEDC", "EKEDC", "EEDC", "IKEDC", "JEDC", "KAEDCO", "KEDCO", "BEDC"],
-			cableTv: ["dstv", "gotv", "startimes", "showmax"],
-			dataBundle: ["mtn", "airtel", "glo", "etisalat", "smile", "spectranet"],
+			cableTv: ["DSTV", "GOTV", "Startimes", "Showmax"],
+			dataBundle: ["MTN", "Airtel", "Glo", "Etisalat", "Smile", "Spectranet"],
 		},
 	};
 	public async vendAirtime(
@@ -55,7 +55,6 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 					recipient: response.recipient,
 					network: response.network,
 					date: response.date,
-					transactionReference: requestData.transactionRef,
 				},
 			};
 		} catch (error: any) {
@@ -166,8 +165,7 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 					amount: response.amount,
 					recipient: response.recipient,
 					network: response.network,
-					date: response.data,
-					transactionReference: response.transactionTransaction,
+					date: response.date,
 				},
 			};
 		} catch (error: any) {
@@ -368,7 +366,6 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 					units: data.data.raw.energy_units,
 					tariff: "",
 					additionalToken: data.data.additional_meter_token,
-					transactionReference: requestData.transactionRef,
 					accountType: requestData.disco,
 				};
 			} else {
@@ -381,7 +378,6 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 					units: data.data.energy_units,
 					tariff: data.data.tokenInfo.tax || data.data.tokenInfo.tariff,
 					additionalToken: "",
-					transactionReference: requestData.transactionRef,
 					accountType: requestData.disco,
 				};
 			}
@@ -407,7 +403,7 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			const { data } = await axios.get(`${FelaConfig.baseUrl}/list/electricityProviders`, {
 				headers: felaHeader,
 			});
-
+			console.log("I'M HERE", data);
 			if (Object.keys(data.data).length > 0) {
 				return {
 					ok: true,
@@ -568,7 +564,6 @@ class Fela implements AirtimeProvider, DataProvider, Partial<ElectricityProvider
 			const { data }: any = await axios.get(`${FelaConfig.baseUrl}/list/cableProviders`, {
 				headers: felaHeader,
 			});
-
 			if (Object.keys(data.data).length > 0) {
 				return {
 					ok: true,

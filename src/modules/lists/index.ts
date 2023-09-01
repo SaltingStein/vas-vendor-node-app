@@ -24,6 +24,14 @@ export interface IListItem {
 	[key: string]: any;
 }
 
+export interface ICableTVProvider {
+	[T: string]: {
+		code: string;
+		title: string;
+		providerId: string;
+	};
+}
+
 class ListSource {
 	[key: string]: (data?: any, user?: any) => IList | Promise<IList> | Promise<IListItem[]> | any;
 
@@ -116,12 +124,21 @@ class ListSource {
 		key: `cabletvBouquets-{{provider_code}}`,
 	})
 	public async cabletvBouquets(payload: any) {
-		const providers = (await this.cableProviders()) as object;
+		const providers = (await this.cableProviders()) as {
+			[T: string]: {
+				code: string;
+				title: string;
+				providerId: string;
+			};
+		};
 		if (!Object.keys(providers).includes(payload.provider_code)) {
 			throw new BadRequestError("Invalid provider code provided. Please check and try again").setData(payload);
 		}
 		if (!App.PROD) {
-			const response = (await CabletvBouquets.findOne({ providerId: payload.provider_code }, { bouquets: 1 })) as unknown as {
+			const response = (await CabletvBouquets.findOne(
+				{ providerId: providers[payload.provider_code].providerId },
+				{ bouquets: 1 },
+			)) as unknown as {
 				bouquets: {
 					[x: string]: {
 						code: string;

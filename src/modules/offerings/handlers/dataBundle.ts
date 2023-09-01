@@ -21,6 +21,7 @@ class DataBundle extends PaidOfferingHandler {
 			bundleCode: this.params.providerCode,
 		})) as any;
 		const { data, ok } = result;
+		data.transactionReference = this.source.sessionId;
 		if (ok) {
 			return new Artifact(data, "Fulfillment Successful");
 		}
