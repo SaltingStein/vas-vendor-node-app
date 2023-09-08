@@ -101,6 +101,7 @@ export async function fulfill(data: FulfillmentRequestData, user: Interface.Data
 		console.log("______New Offline Pay request", data);
 		// Retrieve merchant commission configuration
 		const commissions = await merchantCanVendService(user, data.params.productName, data.params.productType.toLowerCase());
+		console.log("COMMISSION IS HERE", commissions);
 		data.params.utility = commissions.utility;
 		const service = await Offering.findByName(data.params.productName);
 		const Handler = await getHandler(service);
@@ -239,9 +240,10 @@ function calculateCommission(amount: string, commissionRate: string, referralRat
 }
 
 function utilityBundlePriceCalculator(amount: string | number, bundlePriceListing: BundlePriceListing) {
-	let selectedPrice = null;
+	let selectedPrice: any;
 	let extraAmount = 0;
-	if (!bundlePriceListing[amount] && Object.keys(bundlePriceListing).length > 1) {
+	console.log("BUNLDE PRICE LISTING IS HERE", bundlePriceListing);
+	if (!bundlePriceListing[amount] || Object.keys(bundlePriceListing).length > 1) {
 		const priceListing = Object.keys(bundlePriceListing)
 			.map((element) => Number(element))
 			.sort((a, b) => a - b);
@@ -250,16 +252,15 @@ function utilityBundlePriceCalculator(amount: string | number, bundlePriceListin
 		amount = Number(amount);
 		if (amount < loweBound) {
 			throw new BadRequestError(`Invalid amount(${amount}) provided. Amount must be one of ${priceListing}`);
-		}
-
-		if (amount > upperBound) {
+		} else if (amount > upperBound) {
 			extraAmount = amount - upperBound;
 			selectedPrice = bundlePriceListing[String(upperBound)];
+		} else {
+			selectedPrice = bundlePriceListing[String(amount)];
 		}
 	} else if (Object.keys(bundlePriceListing).length === 1) {
 		selectedPrice = bundlePriceListing[Object.keys(bundlePriceListing)[0]];
 	}
-	selectedPrice = bundlePriceListing[amount];
 	const price = Number(selectedPrice.price);
 	const rewardRate = Number(selectedPrice.cashtoken);
 	const utitlityRate = Number(selectedPrice.utility);
