@@ -36,6 +36,7 @@ const Config = Object.freeze({
 		BASE_URL: getEnv<string>("BASE_URL", "http://127.0.0.1:4600/"),
 		JWT_SECRET: getEnv<string>("JWT_SECRET"),
 		ADMIN_MISDN: getEnv<string>("ADMIN_MISDN", "2348137107881"),
+		ADMIN_TOKEN: getEnv<string>("ADMIN_TOKEN"),
 	},
 	Fela: {
 		sourceName: getEnv<string>("FELA_SOURCE"),

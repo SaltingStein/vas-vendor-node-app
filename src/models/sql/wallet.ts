@@ -4,7 +4,7 @@ import { Table, Model, Column, DataType } from "sequelize-typescript";
 	timestamps: false,
 	tableName: "wp_usermeta",
 })
-export class WP_USERMETA extends Model {
+export class WPUserMeta extends Model {
 	@Column({
 		type: DataType.NUMBER,
 		allowNull: false,

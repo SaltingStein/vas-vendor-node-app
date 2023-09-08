@@ -23,15 +23,18 @@ export class ICashtokenBundles extends MyGoose {
 		return bundle;
 	}
 	public static async findByCode(this: ReturnModelType<typeof ICashtokenBundles>, code: number) {
-		const bundle = await this.findOne({
-			code,
-		});
+		const bundle = await this.findOne(
+			{
+				code,
+			},
+			{ code: 1, product: 1, provider: 1, _id: 0 },
+		);
 		if (!bundle) {
-			throw new NotFoundError("Bundle does not exist");
+			return null;
 		}
 		return bundle;
 	}
-	public static async fetchBundles(this: ReturnModelType<typeof ICashtokenBundles>, filter: any) {
+	public static async fetchBundles(this: ReturnModelType<typeof ICashtokenBundles>, filter: any = {}) {
 		const bundles = await this.find(filter, { code: 1, product: 1, provider: 1, _id: 0 });
 		const cashtokenBundles: {
 			[x: number]: {

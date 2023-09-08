@@ -38,8 +38,6 @@ WeaverApp.on(WeaverExpressAppEvents.PREINIT, (app: Application) => {
 
 WeaverApp.once(WeaverExpressAppEvents.ROUTES_DID_BIND, async (app: Application) => {
 	Logger.info("App routes have been mounted");
-	MySQLConnection;
-	// Do stuff
 });
 
 WeaverApp.init();

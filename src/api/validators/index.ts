@@ -1,8 +1,7 @@
-import { sanitizePhoneNumber } from "@libs/utils";
 import { body, check, param, query } from "express-validator/check";
 import { App } from "@config";
 export const SOURCES = ["agency"];
-export const PRODUCTS = ["airtime", "electricity", "cabletv", "databundle"];
+export const PRODUCTS = ["airtime", "electricity", "cabletv", "databundle", "utilitybundle"];
 export const Params = (productNames = PRODUCTS) => [
 	body("params")
 		.exists()

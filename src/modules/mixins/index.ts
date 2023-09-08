@@ -35,7 +35,6 @@ export const cache = (options: ICacheOptions = {}) => {
 			const redisKey = `cache:${target.constructor.name}:${options.key ? interpolator.parse(options.key, args[0]) : property}`;
 			logger(`Redis Key - ${redisKey}`);
 			const cached = await Redis.ActiveConnection.get(redisKey);
-			console.log(`REDIS VALUE`, cached);
 			if (cached) {
 				// try to parse cached data
 				try {

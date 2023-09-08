@@ -9,16 +9,16 @@ import moment from "moment-timezone";
 moment.tz.setDefault("Africa/Lagos");
 
 class Airtime extends PaidOfferingHandler {
-	private vendor!: AirtimeProvider;
+	private vendor!: any;
 
 	public async value() {
-		const result = (await this.vendor.vendAirtime({
+		const result = await this.vendor.default.vend({
 			amount: this.params.amount,
 			recipient: this.params.providerId,
 			transactionRef: this.params.transactionReference,
 			network: this.params.productType,
 			merchantId: this.source.sourceId,
-		})) as any;
+		});
 		const { data, ok } = result;
 		data.transactionReference = this.source.sessionId;
 		if (ok) {
@@ -70,7 +70,7 @@ class Airtime extends PaidOfferingHandler {
 
 	public async init() {
 		const init = await super.init();
-		this.vendor = await AirtimeDataBundleFacade.airtimeVendor(this.params.productType);
+		this.vendor = (await AirtimeDataBundleFacade.airtimeVendor(this.params.productType)) as unknown as AirtimeProvider;
 		return init;
 	}
 }

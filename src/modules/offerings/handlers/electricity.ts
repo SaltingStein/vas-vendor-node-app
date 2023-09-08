@@ -11,7 +11,7 @@ class Electricity extends PaidOfferingHandler {
 	private vendor!: ElectricityProvider & Services;
 
 	public async value() {
-		const result = (await this.vendor.vendFelaElectricity({
+		const result = (await this.vendor.vend({
 			meterNumber: this.params.providerId,
 			disco: this.params.providerCode,
 			serviceCode: this.params.productType,

@@ -11,12 +11,9 @@ export const electrcityVendor = async (productType: string): Promise<Electricity
 	let provisionedVendor: (ElectricityProvider & Services) | null = null;
 	for (const vendor in vendors) {
 		const path = `@libs/${vendors[vendor]}`;
-		const provider = (await import(path)).default;
-		if (
-			provider.services["services"]["electricity"] &&
-			provider.services["services"]["electricity"].includes(productType.toUpperCase())
-		) {
-			provisionedVendor = provider;
+		const provider = await import(path);
+		if (provider["services"]["electricity"] && provider["services"]["electricity"].includes(productType.toUpperCase())) {
+			provisionedVendor = provider.Electricity;
 		}
 	}
 	return provisionedVendor;

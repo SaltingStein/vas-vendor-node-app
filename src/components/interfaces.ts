@@ -3,7 +3,7 @@ import * as PhedcInterface from "@libs/phedc/interfaces";
 import { ErrorType } from "@components/errors";
 
 export interface AirtimeProvider {
-	vendAirtime(data: FelaInterface.VendAirtimeRequestData): Promise<FelaInterface.ErrorResponse | FelaInterface.VendAirtimeResponse>;
+	vend(data: FelaInterface.VendAirtimeRequestData): Promise<FelaInterface.ErrorResponse | FelaInterface.VendAirtimeResponse>;
 }
 
 export interface CashtokenBundleProvider {
@@ -12,16 +12,14 @@ export interface CashtokenBundleProvider {
 
 export interface DataProvider {
 	getDatabundles(providerId: string): Promise<FelaInterface.FetchDatabundleResponse | FelaInterface.ErrorResponse>;
-	vendDatabundle(
-		data: FelaInterface.VendDatabundleRequestData,
-	): Promise<FelaInterface.VendDatabundleResponse | FelaInterface.ErrorResponse>;
+	vend(data: FelaInterface.VendDatabundleRequestData): Promise<FelaInterface.VendDatabundleResponse | FelaInterface.ErrorResponse>;
 	getBundleAmount(
 		bundle: FelaInterface.GetDatabundleAmountRequestData,
 	): Promise<FelaInterface.GetDatabundleAmountResponse | FelaInterface.ErrorResponse>;
 }
 
 export interface ElectricityProvider {
-	vendFelaElectricity(
+	vend(
 		requestData: FelaInterface.VendElectrictyRequestData | PhedcInterface.VendElectrictyRequestData,
 	): Promise<FelaInterface.ErrorResponse | FelaInterface.VendElectricityResponse | PhedcInterface.VendElectricityResponse>;
 	fetchElectricityProviders(): Promise<FelaInterface.GetElectricityProvidersResponse | FelaInterface.ErrorResponse>;
@@ -29,13 +27,11 @@ export interface ElectricityProvider {
 		requestData: FelaInterface.VerifyMeterNoRequestData | PhedcInterface.VerifyMeterNoRequestData,
 	): Promise<FelaInterface.VerifyMeterNoResponse | FelaInterface.ErrorResponse | PhedcInterface.VerifyMeterNoResponse>;
 	requeryOrder(transactionId: string): Promise<PhedcInterface.RequeryVendResponse | FelaInterface.ErrorResponse>;
-	getWalletBalance(): Promise<PhedcInterface.getWalletBalanceResponse | PhedcInterface.ErrorResponse>;
+	getWalletBalance(): Promise<PhedcInterface.GetWalletBalanceResponse | PhedcInterface.ErrorResponse>;
 }
 
 export interface CableTvProvider {
-	vendCableTv(
-		requestData: FelaInterface.VendCableTVRequestData,
-	): Promise<FelaInterface.ErrorResponse | FelaInterface.VendCableTVResponse>;
+	vend(requestData: FelaInterface.VendCableTVRequestData): Promise<FelaInterface.ErrorResponse | FelaInterface.VendCableTVResponse>;
 	fetchCabletvProviders(): Promise<FelaInterface.ErrorResponse | FelaInterface.CableTVProviderResponse>;
 	fetchBouquets(provider: string): Promise<FelaInterface.ErrorResponse | FelaInterface.CableTVProviderResponse>;
 	getBouquetAmount(

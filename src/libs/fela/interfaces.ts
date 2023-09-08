@@ -6,7 +6,7 @@ export interface IObjectData {
 
 export interface VendAirtimeRequestData {
 	recipient: string;
-	amount: number;
+	amount: string;
 	network: string;
 	merchantId: string;
 	transactionRef: string;

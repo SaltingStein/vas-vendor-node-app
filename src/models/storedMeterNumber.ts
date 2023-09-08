@@ -59,7 +59,7 @@ export class ISavedMeterDetails extends MyGoose {
 				meterType: meterType.toUpperCase(),
 				meterNo,
 				disco: disco.toUpperCase(),
-				customerInfo: customerInfo,
+				customerInfo,
 			};
 
 			const createDetail = await this.create(data as ISavedMeterDetails);

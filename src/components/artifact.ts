@@ -25,7 +25,6 @@ export class Artifact {
 	}
 
 	public setAsActivity(activity: ArtifactActivity) {
-		console.log("ACTIVITY IS HERE", activity);
 		this.activity = activity;
 		return this;
 	}

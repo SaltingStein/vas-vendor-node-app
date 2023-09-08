@@ -1,6 +1,6 @@
 import { Artifact } from "@components/artifact";
 import { OrderStatus, OrderData } from "@components/order";
-import { Order, IOrder } from "@models";
+import { Order } from "@models";
 import { BaseOfferingHandler, FulfillmentRequestData } from "./base";
 
 export interface PaymentMetadata {
@@ -32,6 +32,7 @@ export class PaidOfferingHandler extends BaseOfferingHandler<FulfillmentRequestD
 			payment.amount = this.params.amount;
 			payment.isFulfilled = true;
 			payment.fulfilledAt = new Date();
+			payment.status = OrderStatus.COMPLETED;
 			await Promise.all([order.save(), payment.save()]);
 			return artifact.andLogActivity({
 				sourceId: this.source.sourceId,
@@ -54,7 +55,7 @@ export class PaidOfferingHandler extends BaseOfferingHandler<FulfillmentRequestD
 		return true;
 	}
 
-	public async getOrder() {
+	public getOrder() {
 		return this.order;
 	}
 

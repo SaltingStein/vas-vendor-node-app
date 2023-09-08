@@ -1,22 +1,21 @@
-import { WP_USERMETA } from "@models/sql/wallet";
+import { WPUserMeta } from "@models/sql/wallet";
 import sequelize from "@connections/mysql";
 import { WalletTransaction, TransactionTypes, PaymentStatus } from "@models/walletTransactions";
 
 class Wallet {
 	public async transfer(srcUserId: any, dstUserId: any, amount: any, tranRef: string, type: string) {
-		console.log("TRANSFER PAYLOAD", srcUserId, dstUserId, amount);
 		try {
 			const result = (await sequelize.ActiveConnection).transaction(async (t: any) => {
 				const debitResult = await this.debitWallet(srcUserId, amount, t);
 				const creditResult = await this.creditWallet(dstUserId, amount, t);
 				await WalletTransaction.create({
 					refId: tranRef,
-					type: type,
-					amount: amount,
+					type,
+					amount,
 					balBefore: type === TransactionTypes.DEBIT ? debitResult.balBefore : creditResult.balBefore,
 					balAfter: type === TransactionTypes.DEBIT ? debitResult.balAfter : creditResult.balAfter,
-					dstUserId: dstUserId,
-					srcUserId: srcUserId,
+					dstUserId,
+					srcUserId,
 					status: PaymentStatus.COMPLETED,
 				});
 			});
@@ -29,7 +28,7 @@ class Wallet {
 
 	public async walletBalance(userId: number) {
 		try {
-			const wp_wallets = await WP_USERMETA.findOne({
+			const wpWallets = await WPUserMeta.findOne({
 				where: {
 					user_id: userId,
 					meta_key: "_current_woo_wallet_balance",
@@ -37,9 +36,8 @@ class Wallet {
 				lock: true,
 				attributes: ["meta_key", "meta_value"],
 			});
-			console.log("ALL WP WALLETS", wp_wallets?.dataValues);
 
-			return Number.parseFloat(wp_wallets?.dataValues.meta_value);
+			return Number.parseFloat(wpWallets?.dataValues.meta_value);
 		} catch (error) {
 			console.log("Wallet-Balance:Error:", error);
 			throw error;
@@ -58,7 +56,7 @@ class Wallet {
 		if (!!transaction) {
 			query = { ...query, transaction, lock: true };
 		}
-		const srcWallet = await WP_USERMETA.findOne(query);
+		const srcWallet = await WPUserMeta.findOne(query);
 		if (!srcWallet) {
 			// Throw wallet not found
 			throw new Error("Wallet not found.");
@@ -71,7 +69,7 @@ class Wallet {
 		} else {
 			console.log("DEBIT BEGAN");
 			const newBalance = Number.parseFloat(srcWallet?.dataValues.meta_value) - amount;
-			await WP_USERMETA.update(
+			await WPUserMeta.update(
 				{ meta_value: newBalance },
 				{
 					where: {
@@ -100,13 +98,13 @@ class Wallet {
 		if (!!transaction) {
 			query = { ...query, transaction, lock: true };
 		}
-		const dstWallet = await WP_USERMETA.findOne(query);
+		const dstWallet = await WPUserMeta.findOne(query);
 		if (!dstWallet) {
 			// Throw wallet not found
 			throw new Error("Wallet not found.");
 		} else {
 			const newBalance = Number.parseFloat(dstWallet?.dataValues.meta_value) + amount;
-			await WP_USERMETA.update(
+			await WPUserMeta.update(
 				{ meta_value: newBalance },
 				{
 					where: {

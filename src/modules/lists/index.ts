@@ -1,7 +1,7 @@
 import { App } from "@config";
 import { BadRequestError, ServerError, ServiceUnavailableError, ErrorType } from "@components/errors";
 import { Logger } from "@components/logger";
-import Fela from "@libs/fela";
+import { DataBundle as FelaDataBundle, CableTv as FelaCableTv, Electricity as FelaElectricity } from "@libs/fela";
 import { node } from "@libs/validator";
 import { formatListResponse } from "@libs/utils";
 import { cache, singleArgAssert, validate } from "../mixins";
@@ -61,7 +61,7 @@ class ListSource {
 				throw new BadRequestError("Invalid provider code provided. Please check and try again").setData(payload);
 			}
 		}
-		const { data, ok } = await Fela.getDatabundles(payload.provider_code);
+		const { data, ok } = await FelaDataBundle.default.getDatabundles(payload.provider_code);
 		if (ok) {
 			return data;
 		} else if ("message" in data) {
@@ -89,7 +89,7 @@ class ListSource {
 				throw new BadRequestError(`Unable to retrieve airtime providers. Please try again`);
 			}
 		}
-		const { data, ok } = await Fela.fetchAirtimeProviders();
+		const { data, ok } = await FelaDataBundle.default.fetchAirtimeProviders();
 		if (ok) {
 			return data;
 		} else if ("message" in data) {
@@ -109,7 +109,7 @@ class ListSource {
 				throw new BadRequestError(`Unable to retrieve databundle providers. Please try again`);
 			}
 		}
-		const { data, ok } = await Fela.fetchDatabundleProviders();
+		const { data, ok } = await FelaDataBundle.default.fetchDatabundleProviders();
 		if (ok) {
 			return data;
 		} else if ("message" in data) {
@@ -154,7 +154,7 @@ class ListSource {
 				throw new BadRequestError("Invalid provider code provided. Please check and try again").setData(payload);
 			}
 		}
-		const { data, ok } = await Fela.fetchBouquets(payload.provider_code);
+		const { data, ok } = await FelaCableTv.default.fetchBouquets(payload.provider_code);
 		if (ok) {
 			return data;
 		} else if ("message" in data) {
@@ -182,7 +182,7 @@ class ListSource {
 				throw new BadRequestError(`Unable to retrieve cabletv providers. Please try again`);
 			}
 		}
-		const { data, ok } = await Fela.fetchCabletvProviders();
+		const { data, ok } = await FelaCableTv.default.fetchCabletvProviders();
 		if (ok) {
 			return data;
 		} else if ("message" in data) {
@@ -210,7 +210,7 @@ class ListSource {
 				throw new BadRequestError(`Unable to retrieve electricity providers. Please try again`);
 			}
 		}
-		const { data, ok } = await Fela.fetchElectricityProviders();
+		const { data, ok } = await FelaElectricity.default.fetchElectricityProviders();
 		if (ok) {
 			return data;
 		} else if ("message" in data) {

@@ -11,8 +11,8 @@
 				"coverage": "jest --coverage",
 				"build": "tsc -p tsconfig.build.json",
 				"format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\" \"src/**/*.js\" \"views/**/*.ejs\"",
-				"lint": "eslint 'src/**/**/*.ts'",
-				"lint:fix": "eslint 'src/**/**/*.ts' --fix",
+				"lint": "tslint -p tsconfig.json",
+				"lint:fix": "tslint -p tsconfig.json --fix",
 				"link": "link-module-alias",
 				"nodemon": "nodemon",
 				"commit": "git-cz",
@@ -142,7 +142,7 @@
 				"watch": [
 						"src"
 				],
-				"exec": "npm start",
+				"exec": "npm run start:staging",
 				"ext": "ts"
 		},
 		"lint-staged": {

@@ -14,8 +14,8 @@ export const cableTvVendor = async (productType: CableNetworks): Promise<CableTv
 	let provisionedVendor!: CableTvProvider;
 	for (const vendor in vendors) {
 		const path = `@libs/${vendors[vendor]}`;
-		const provider = (await import(path)).default;
-		provisionedVendor = provider;
+		const provider = await import(path);
+		provisionedVendor = provider.CableTv;
 		// if (provider.services["cableTv"] && provider.services["cableTv"].includes(productType.toLowerCase())) {
 		// }
 	}

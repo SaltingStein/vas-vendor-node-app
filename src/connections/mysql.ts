@@ -1,7 +1,7 @@
 import { MySQL } from "@config";
 import { Sequelize } from "sequelize-typescript";
 // import { BaseConnection } from "./base";
-import { WP_USERMETA } from "@models/sql/wallet";
+import { WPUserMeta } from "@models/sql/wallet";
 
 interface SequelizeOptions {
 	logging?: boolean;
@@ -17,7 +17,7 @@ class MySQLConnection {
 	}
 	public async createConnection() {
 		const connection = new Sequelize(`mysql://${MySQL.username}:${MySQL.password}@${MySQL.host}:${MySQL.port}/${MySQL.database}`, {
-			models: [WP_USERMETA],
+			models: [WPUserMeta],
 		});
 
 		await connection.sync();

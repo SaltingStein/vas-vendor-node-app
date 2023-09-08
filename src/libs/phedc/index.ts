@@ -73,9 +73,8 @@ class Phedc implements Partial<ElectricityProvider> {
 			};
 			const { data } = await axios.post(`${PhedcConfig.baseUrl}/GettransactionInfo`, requestPayload);
 
-			// console.log(resp.data);
 			if (data[0]) {
-				const details: Interface.detailsProperties = this.filterDetails(data[0].DETAILS) as unknown as Interface.detailsProperties;
+				const details: Interface.DetailsProperties = this.filterDetails(data[0].DETAILS) as unknown as Interface.DetailsProperties;
 				return {
 					ok: true,
 					data: {
@@ -199,7 +198,7 @@ class Phedc implements Partial<ElectricityProvider> {
 		}
 	}
 
-	public async getWalletBalance(): Promise<Interface.getWalletBalanceResponse | Interface.ErrorResponse> {
+	public async getWalletBalance(): Promise<Interface.GetWalletBalanceResponse | Interface.ErrorResponse> {
 		try {
 			const requestPayload = {
 				username: PhedcConfig.userName,

@@ -27,13 +27,13 @@ export interface VerifyMeterNoResponse extends Response {
 		disco: string;
 	};
 }
-export interface getWalletBalanceResponse extends Response {
+export interface GetWalletBalanceResponse extends Response {
 	data: {
 		balance: string;
 	};
 }
 
-export interface detailsProperties {
+export interface DetailsProperties {
 	"Arrears (NGN)": string;
 	"Energy Value (NGN)": string;
 	"Preload (NGN)": string;
@@ -50,7 +50,7 @@ export interface RequeryVendResponse extends Response {
 		status: string;
 		units: string;
 		tarriff: string;
-	} & detailsProperties;
+	} & DetailsProperties;
 }
 
 export interface VendElectricityResponse extends Response {
@@ -63,7 +63,7 @@ export interface VendElectricityResponse extends Response {
 		units: string;
 		tariff: string;
 		accountType: string;
-	} & detailsProperties;
+	} & DetailsProperties;
 }
 
 export interface Details {

@@ -169,7 +169,6 @@ export const editable = ({ nest = false, required = true, type }: EditableOption
 			nest,
 			required,
 		};
-		// console.log(inputStore);
 	};
 };
 

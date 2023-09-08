@@ -11,9 +11,9 @@ export const dataBundleVendor = async (productType: DataNetworks): Promise<DataP
 	let provisionedVendor!: DataProvider;
 	for (const vendor in vendors) {
 		const path = `@libs/${vendors[vendor]}`;
-		const provider = (await import(path)).default;
-		if (provider.services["services"]["dataBundle"] && provider.services["services"]["dataBundle"].includes(productType)) {
-			provisionedVendor = provider;
+		const provider = await import(path);
+		if (provider["services"]["dataBundle"] && provider["services"]["dataBundle"].includes(productType)) {
+			provisionedVendor = provider.DataBundle;
 		}
 	}
 	return provisionedVendor;
@@ -23,9 +23,9 @@ export const airtimeVendor = async (productType: AirtimeNetworks): Promise<Airti
 	let provisionedVendor!: AirtimeProvider;
 	for (const vendor in vendors) {
 		const path = `@libs/${vendors[vendor]}`;
-		const provider = (await import(path)).default;
-		if (provider.services["services"]["airtime"] && provider.services["services"]["airtime"].includes(productType)) {
-			provisionedVendor = provider;
+		const provider = await import(path);
+		if (provider["services"]["airtime"] && provider["services"]["airtime"].includes(productType)) {
+			provisionedVendor = provider.Airtime;
 			break;
 		}
 	}

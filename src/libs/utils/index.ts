@@ -9,9 +9,6 @@ export const interpolator = new Interpolator({
 	delimiter: ["{{", "}}"],
 });
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-export const noop = (...args: any[]): any => {};
-
 export const readFileToStringAsync = async (filePath: string) => {
 	try {
 		const fileContent = await fsPromises.readFile(filePath, "utf8");
@@ -62,7 +59,6 @@ export const sanitizePhoneNumber = (phoneNo: string, code = "234") => {
 export function formatNumberAsCurrency(num: string | number) {
 	if (typeof num === "string") {
 		num = Number(num);
-		// console.log(num);
 	}
 	return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }

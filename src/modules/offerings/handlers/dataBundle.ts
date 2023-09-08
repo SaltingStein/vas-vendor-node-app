@@ -2,7 +2,7 @@ import { Artifact } from "@components/artifact";
 import { BadRequestError, ServerError, ServiceUnavailableError, ErrorType } from "@components/errors";
 import { DataProvider } from "@components/interfaces";
 import { DataNetworks } from "@components/enums";
-import Fela from "@libs/fela";
+import { DataBundle as FelaDataBundle } from "@libs/fela";
 import { sanitizePhoneNumber, getUniqueReference } from "@libs/utils";
 import { node, PaidOfferingHandler } from "@modules/offerings";
 import { AirtimeDataBundleFacade } from "@modules/service-facades";
@@ -10,10 +10,10 @@ import moment from "moment-timezone";
 moment.tz.setDefault("Africa/Lagos");
 
 class DataBundle extends PaidOfferingHandler {
-	private vendor!: DataProvider;
+	private vendor!: any;
 
 	public async value() {
-		const result = (await this.vendor.vendDatabundle({
+		const result = (await this.vendor.default.vend({
 			recipient: this.params.providerId,
 			transactionRef: this.params.transactionReference,
 			network: this.params.productType,
@@ -57,7 +57,7 @@ class DataBundle extends PaidOfferingHandler {
 				.exists()
 				.customValidator(async (value) => {
 					const { productType } = this.params;
-					const { ok, data } = (await Fela.getDatabundles(productType)) as any;
+					const { ok, data } = (await FelaDataBundle.default.getDatabundles(productType)) as any;
 					let response: boolean;
 					if (!ok) {
 						response = false;

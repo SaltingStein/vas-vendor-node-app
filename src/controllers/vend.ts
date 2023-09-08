@@ -6,7 +6,9 @@ import { PaymentMethods } from "@components/enums";
 import Ewallet from "@libs/wallet";
 import { TransactionTypes } from "@models/walletTransactions";
 import { listSources } from "@modules/lists";
+import { CashtokenBundles } from "@models/cashtokenBundles";
 import * as Interface from "@libs/WPCore/interfaces";
+import { List } from "@api/validators";
 
 export interface RefactoredSchema {
 	vendAmount?: string;
@@ -18,6 +20,28 @@ export interface RefactoredSchema {
 	rewardRate?: string;
 	referralAmount?: string;
 	referralRate?: string;
+	vasAmount?: string;
+	vasRate?: string;
+}
+interface BundlePriceListing {
+	[x: string]: {
+		utility: string;
+		cashtoken: string;
+		price: string;
+	};
+}
+
+interface Utility {
+	provider: string;
+	product: string;
+	code: string;
+}
+
+export enum products {
+	UTILITYBUNDLE = "utilitybundle",
+	AIRTIME = "airtime",
+	DATABUNDLE = "databundle",
+	ELECTRICITY = "electricity",
 }
 
 async function getHandler(offering: DocumentType<IOffering>) {
@@ -25,16 +49,28 @@ async function getHandler(offering: DocumentType<IOffering>) {
 	return Handler;
 }
 
-function merchantCanVendService(user: Interface.Data, offering: string, productType: string) {
-	console.log("USER IS HERE O", user);
+async function merchantCanVendService(
+	user: Interface.Data,
+	offering: string,
+	productType: string,
+): Promise<RefactoredSchema & Partial<{ bundlePriceListing: BundlePriceListing } & { utility: Utility }>> {
+	let serviceCommission: RefactoredSchema & Partial<{ bundlePriceListing: BundlePriceListing } & { utility: Utility }> = {};
+	if (offering === products.UTILITYBUNDLE) {
+		const utilityType = await CashtokenBundles.findByCode(Number(productType));
+		if (!utilityType) {
+			throw new BadRequestError(`Invalid providedType provided(${productType})`);
+		}
+		const bundlePriceListing = await listSources.cashtokenBundleProviders({ provider_code: productType }, user.token);
+		serviceCommission = Object.assign(serviceCommission, { bundlePriceListing, utility: utilityType });
+		offering = utilityType.product.toLowerCase();
+		productType = utilityType.provider.toLowerCase();
+	}
+	// return;
 	const { commissions } = user;
-	console.log("Commission IS HERE O", commissions);
-	console.log("Offering IS HERE O", offering, productType);
 	const merchantAvailableServices = commissions[offering];
 	if (!merchantAvailableServices || !merchantAvailableServices[productType]) {
 		throw new BadRequestError(`You do not have authorization to vend the provided service(${productType})`);
 	}
-	let serviceCommission: RefactoredSchema | null = null;
 	for (const element in merchantAvailableServices[productType]) {
 		switch (element) {
 			case "discount":
@@ -57,18 +93,18 @@ function merchantCanVendService(user: Interface.Data, offering: string, productT
 					: { referralRate: merchantAvailableServices[productType]["referrer"] || "0" };
 		}
 	}
-
-	return serviceCommission as RefactoredSchema;
+	return serviceCommission;
 }
 
 export async function fulfill(data: FulfillmentRequestData, user: Interface.Data) {
 	try {
 		console.log("______New Offline Pay request", data);
+		// Retrieve merchant commission configuration
+		const commissions = await merchantCanVendService(user, data.params.productName, data.params.productType.toLowerCase());
+		data.params.utility = commissions.utility;
 		const service = await Offering.findByName(data.params.productName);
 		const Handler = await getHandler(service);
-		// Retrieve merchant commission configuration
-		const commissions: RefactoredSchema = merchantCanVendService(user, service.name, data.params.productType.toLowerCase());
-		console.log("COMMISSIONS", commissions);
+		// return;
 		const handler = new Handler(data);
 		const { source, params } = handler.data;
 		const txnRef = source.sessionId;
@@ -78,9 +114,26 @@ export async function fulfill(data: FulfillmentRequestData, user: Interface.Data
 			throw new ValidationError("Transaction reference already exists");
 		}
 		const amount = await getOrderAmount(params.productName, handler.data, params?.productType || null);
-		console.log("ORDER AMOUNT IS HERE", amount);
-		const commissionCalculated: RefactoredSchema = calculateCommission(amount, commissions["discount"] as string);
-		console.log("COMMISSION CALCULATED", commissionCalculated);
+		let commissionCalculated: RefactoredSchema;
+		if (commissions.bundlePriceListing) {
+			const utilityBundleCalculator = utilityBundlePriceCalculator(amount, commissions.bundlePriceListing as BundlePriceListing);
+			commissionCalculated = calculateCommission(
+				utilityBundleCalculator.vasAmount,
+				commissions.discount as string,
+				commissions.referralRate as string,
+			);
+			commissionCalculated.rewardAmount = utilityBundleCalculator.rewardAmount;
+			commissionCalculated.rewardRate = utilityBundleCalculator.rewardRate;
+			commissionCalculated.vasRate = String(utilityBundleCalculator.utitlityRate);
+		} else {
+			commissionCalculated = calculateCommission(
+				amount,
+				commissions.discount as string,
+				commissions.referralRate as string,
+				commissions.rewardRate as string,
+			);
+		}
+		// return;
 		await Ewallet.transfer(user.id, MySQL.systemUser, Number.parseFloat(amount), txnRef, TransactionTypes.DEBIT);
 		const { doc: payment } = await Payment.findOrCreate(
 			{ txnRef },
@@ -107,7 +160,6 @@ export async function fulfill(data: FulfillmentRequestData, user: Interface.Data
 		);
 
 		const artifact = await handler.processOrder(order.id);
-		console.log("Artifact Gotten: " + JSON.stringify(artifact));
 		return artifact;
 	} catch (error: any) {
 		await Ewallet.reverseDebit(data.source.sessionId);
@@ -122,7 +174,7 @@ export async function fulfill(data: FulfillmentRequestData, user: Interface.Data
 
 async function getOrderAmount(productName: string, data: FulfillmentRequestData, productType: string | null = null) {
 	const offerings = await listSources.offerings();
-	const exempted = ["airtime", "electricity"];
+	const exempted = ["airtime", "electricity", "utilitybundle"];
 	if (exempted.includes(productName)) {
 		return data.params.amount;
 	}
@@ -159,20 +211,19 @@ async function getOrderAmount(productName: string, data: FulfillmentRequestData,
 			} else {
 				throw new ServiceUnavailableError("Unable to retrieve bouquets. Please try again");
 			}
-		// case "utilityBundle":
 	}
 }
 
-function calculateCommission(amount: string, commissionRate: string, referralRate = "5", rewardRate = "2") {
-	const commissionGained = (Number(amount) * (Number(commissionRate) / 100)).toFixed(2);
-	let referralAmount = "0";
-	let rewardAmount = "0";
+function calculateCommission(amount: string, commissionRate: string, referralRate = "0.00", rewardRate = "0.00") {
+	const commissionGained = Number(amount) * (Number(commissionRate) / 100);
+	let referralAmount = "0.00";
+	let rewardAmount = "0.00";
 	if (Number(commissionGained) > 0) {
-		referralAmount = (Number(commissionGained) * (Number(referralRate) / 100)).toFixed(2);
-		rewardAmount = (Number(commissionGained) * (Number(rewardRate) / 100)).toFixed(2);
+		referralAmount = (commissionGained * (Number(referralRate) / 100)).toFixed(2);
+		rewardAmount = (commissionGained * (Number(rewardRate) / 100)).toFixed(2);
 	}
 	const commissionEarned = Number(commissionGained) - (Number(referralAmount) + Number(rewardAmount));
-	const vasAmount = (Number(amount) - Number(commissionEarned)).toFixed(2);
+	const vasAmount = (Number(amount) - commissionGained).toFixed(2);
 
 	return {
 		vendAmount: amount,
@@ -183,5 +234,42 @@ function calculateCommission(amount: string, commissionRate: string, referralRat
 		rewardRate,
 		referralRate,
 		vasAmount,
+		vasRate: (100 - Number(rewardRate)).toFixed(2),
+	};
+}
+
+function utilityBundlePriceCalculator(amount: string | number, bundlePriceListing: BundlePriceListing) {
+	let selectedPrice = null;
+	let extraAmount = 0;
+	if (!bundlePriceListing[amount] && Object.keys(bundlePriceListing).length > 1) {
+		const priceListing = Object.keys(bundlePriceListing)
+			.map((element) => Number(element))
+			.sort((a, b) => a - b);
+		const loweBound = priceListing[0];
+		const upperBound = priceListing[priceListing.length - 1];
+		amount = Number(amount);
+		if (amount < loweBound) {
+			throw new BadRequestError(`Invalid amount(${amount}) provided. Amount must be one of ${priceListing}`);
+		}
+
+		if (amount > upperBound) {
+			extraAmount = amount - upperBound;
+			selectedPrice = bundlePriceListing[String(upperBound)];
+		}
+	} else if (Object.keys(bundlePriceListing).length === 1) {
+		selectedPrice = bundlePriceListing[Object.keys(bundlePriceListing)[0]];
+	}
+	selectedPrice = bundlePriceListing[amount];
+	const price = Number(selectedPrice.price);
+	const rewardRate = Number(selectedPrice.cashtoken);
+	const utitlityRate = Number(selectedPrice.utility);
+	const rewardAmount = (price * (rewardRate / 100)).toFixed(2);
+	const vasAmount = (price * (utitlityRate / 100) + extraAmount).toFixed(2);
+
+	return {
+		vasAmount,
+		rewardAmount,
+		utitlityRate,
+		rewardRate: String(rewardRate),
 	};
 }

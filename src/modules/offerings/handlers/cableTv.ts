@@ -2,7 +2,7 @@ import { Artifact } from "@components/artifact";
 import { BadRequestError, ServerError, ServiceUnavailableError, ErrorType } from "@components/errors";
 import { CableTvProvider } from "@components/interfaces";
 import { listSources } from "@modules/lists";
-import Fela from "@libs/fela";
+import { CableTv as FelaCableTv } from "@libs/fela";
 import { getUniqueReference } from "@libs/utils";
 import { node, PaidOfferingHandler } from "@modules/offerings";
 import { TvFacade } from "@modules/service-facades";
@@ -10,10 +10,10 @@ import moment from "moment-timezone";
 moment.tz.setDefault("Africa/Lagos");
 
 class CableTv extends PaidOfferingHandler {
-	private vendor!: CableTvProvider;
+	private vendor!: any;
 
 	public async value() {
-		const result = (await this.vendor.vendCableTv({
+		const result = (await this.vendor.default.vend({
 			smartcardNo: this.params.providerId,
 			transactionRef: this.params.transactionReference,
 			bouquetCode: this.params.providerCode,
@@ -45,7 +45,7 @@ class CableTv extends PaidOfferingHandler {
 
 	public async beforePayment() {
 		this.data.params.transactionReference = `${getUniqueReference()}`;
-		const { data } = (await Fela.fetchBouquets(this.data.params.productType)) as any;
+		const { data } = (await FelaCableTv.default.fetchBouquets(this.data.params.productType)) as any;
 		this.data.params.service = data[this.data.params.providerCode];
 		const providerList = (await listSources.cableProviders()) as any;
 		this.data.params.providerName = providerList[this.data.params.productType]["title"].toUpperCase();
@@ -91,7 +91,7 @@ class CableTv extends PaidOfferingHandler {
 				.exists()
 				.customValidator(async (value) => {
 					const { productType, providerCode } = this.params;
-					const { ok } = await Fela.verifySmartCardNo({
+					const { ok } = await FelaCableTv.default.verifySmartCardNo({
 						cardNo: value,
 						providerCode: productType,
 						bouquetCode: providerCode,
