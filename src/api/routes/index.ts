@@ -9,7 +9,7 @@ import {
 	SourceController,
 	InfoController,
 	CashtokenBundleController,
-	CallbackController,
+	WPCoreController,
 } from "@controllers";
 const { fromPath } = RouteLoader();
 
@@ -33,8 +33,8 @@ export const routes: RouteCollection = {
 	source: Api.load({
 		post: [["/", Validators.Source, [], SourceController.create]],
 	}),
-	callback: Api.load({
-		post: [["/:name", [], [], CallbackController.callback]],
+	wpcore: Api.load({
+		post: [["/", Validators.WPCore.callback, [], WPCoreController.callback]],
 	}),
 };
 
@@ -44,6 +44,6 @@ export const RestAuth = BearerAuth({
 		all: [/^\/docs(\/?)/],
 		// get: [/^\/list(\/?)/, /^\/info(\/?)/, /^\/cashtokenBundle(\/?)/],
 		// get: [/^\/info(\/?)/],
-		post: [/^\/offering(\/?)/, /^\/source(\/?)/, /^\/cashtokenBundle(\/?)/, /^\/callback(\/?)/],
+		post: [/^\/offering(\/?)/, /^\/source(\/?)/, /^\/cashtokenBundle(\/?)/, /^\/wpcore(\/?)/],
 	},
 });

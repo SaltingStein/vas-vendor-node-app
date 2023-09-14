@@ -50,7 +50,7 @@ export const authorize = async (token: string, ctx: any): Promise<AuthStrategyRe
 	try {
 		const response: any = await jwt.verify(token, App.JWT_SECRET);
 		if (response) {
-			const cached = await Redis.ActiveConnection.get(`${response.user_msisdn}`);
+			const cached = await Redis.ActiveConnection.get(`${response.user_id}`);
 			if (cached) {
 				const parsedData = JSON.parse(cached);
 				Object.assign(parsedData, { token });

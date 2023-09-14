@@ -81,6 +81,10 @@ export const Vend = {
 	service: [...Params(), ...VendSource()],
 };
 
+export const WPCore = {
+	callback: [body("action").exists().withMessage("Action is required"), body("id").optional()],
+};
+
 export const CashtokenBundle = {
 	create: [
 		body("code")

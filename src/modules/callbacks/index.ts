@@ -15,6 +15,10 @@ export interface Params {
 	action: Actions;
 }
 
+export enum CallbackTypes {
+	"WPCORE" = "wpcore",
+}
+
 class CallbackSource {
 	public async wpcore(params: Params) {
 		const { id, action } = params;

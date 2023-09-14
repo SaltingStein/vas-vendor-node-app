@@ -3,7 +3,6 @@ import { Event, EventType, ListenerSandbox } from "@modules/events/emitter";
 import { App } from "@config";
 import Redis from "@connections/redis";
 import WPCore from "@libs/WPCore";
-import { IPayment, DocumentType } from "@models";
 
 export interface MerchantProfileEvent {
 	id: string;
@@ -13,6 +12,7 @@ Event.on(
 	EventType.MERCHANT_PROFILE_UPDATE,
 	ListenerSandbox(async (event: MerchantProfileEvent) => {
 		const agentId = event.id;
+		console.log("I AM HERE FOR PROFILE UPDATE", { USERID: agentId });
 		const cached = await Redis.ActiveConnection.get(`${agentId}`);
 		if (cached) {
 			const { ok, data } = await WPCore.getProfile({ authToken: App.ADMIN_TOKEN, user: { user_id: agentId } });
